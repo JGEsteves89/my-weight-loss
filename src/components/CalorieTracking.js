@@ -16,7 +16,7 @@ function CalorieTracking() {
 	};
 
 	return (
-		<div>
+		<div className="component">
 			<h2>Calorie Tracking</h2>
 			<form onSubmit={handleSubmit}>
 				<label htmlFor="intakeCaloriesInput">Intake Calories:</label>

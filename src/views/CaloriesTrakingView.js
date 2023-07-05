@@ -4,7 +4,7 @@ import DataAnalysisVisualization from '../components/DataAnalysisVisualization';
 
 function CaloriesTrakingView() {
 	return (
-		<div>
+		<div className="view">
 			<CalorieTracking />
 			<DataAnalysisVisualization />
 		</div>

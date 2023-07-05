@@ -29,7 +29,7 @@ function GoalSettingForm() {
 	};
 
 	return (
-		<div>
+		<div className="component">
 			<h2>Goal Setting</h2>
 			<form onSubmit={handleSubmit}>
 				<label htmlFor="targetWeightInput">Target Weight:</label>

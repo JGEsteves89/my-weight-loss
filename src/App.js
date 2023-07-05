@@ -10,7 +10,8 @@ import CaloriesTrakingView from './views/CaloriesTrakingView';
 import ExerciseTrackingView from './views/ExerciseTrackingView';
 import MilestonesAndRewardsView from './views/MilestonesAndRewardsView';
 
-import './App.css'; // Import the CSS file
+import './App.css';
+
 function App() {
 	return (
 		<Box sx={{ flexGrow: 1 }}>

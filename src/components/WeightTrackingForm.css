@@ -1,0 +1,47 @@
+.weight-card {
+	display: grid;
+	grid-template-rows: auto auto auto auto;
+	grid-template-columns: auto;
+	grid-auto-flow: row;
+	margin-inline: 1rem;
+}
+.weight-card-row {
+	display: grid;
+	grid-auto-flow: column;
+	grid-template-rows: auto;
+}
+.justify {
+	display: grid;
+	justify-content: center;
+	align-items: center;
+	grid-auto-flow: column;
+}
+.weight-card-header {
+	grid-template-columns: 1rem auto 1rem;
+}
+
+.weight-card-title {
+	color: rgba(9, 57, 109, 0.7);
+	text-transform: uppercase;
+	font-size: 1rem;
+}
+
+.weight-card-value-unit {
+	align-items: baseline;
+}
+
+.weight-card-value {
+	color: black;
+	font-size: 2rem;
+}
+
+.weight-card-unit {
+	color: rgba(9, 57, 109, 0.7);
+	font-size: 1rem;
+}
+.top-button {
+	background-color: rgba(25, 118, 210, 0.1) !important;
+}
+.top-button:hover {
+	background-color: rgba(25, 118, 210, 0.2) !important;
+}

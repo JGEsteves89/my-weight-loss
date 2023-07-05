@@ -7,7 +7,7 @@ function DataAnalysisVisualization() {
 	const exerciseData = [30, 45, 60, 50, 40, 30, 20];
 
 	return (
-		<div>
+		<div className="component">
 			<h2>Data Analysis and Visualization</h2>
 			{/* Display weight graph */}
 			<h3>Weight Progress</h3>

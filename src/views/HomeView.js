@@ -7,11 +7,11 @@ import WeightTrackingForm from '../components/WeightTrackingForm';
 
 function HomeView() {
 	return (
-		<div>
+		<div className="view">
 			<WeightTrackingForm />
-			<GoalSettingForm />
 			<CalorieTracking />
 			<ExerciseTracking />
+			<GoalSettingForm />
 			<DataAnalysisVisualization />
 		</div>
 	);

@@ -16,7 +16,7 @@ function ExerciseTracking() {
 	};
 
 	return (
-		<div>
+		<div className="component">
 			<h2>Exercise Tracking</h2>
 			<form onSubmit={handleSubmit}>
 				<label htmlFor="exerciseMinutesInput">Exercise Minutes:</label>

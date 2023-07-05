@@ -22,7 +22,7 @@ function MilestonesAndRewards() {
 	};
 
 	return (
-		<div>
+		<div className="component">
 			<h2>Milestones and Rewards</h2>
 			<form onSubmit={handleSubmit}>
 				<label htmlFor="milestoneInput">Milestone:</label>

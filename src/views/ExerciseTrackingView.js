@@ -2,7 +2,11 @@ import React from 'react';
 import ExerciseTracking from '../components/ExerciseTracking';
 
 function ExerciseTrackingView() {
-	return <ExerciseTracking />;
+	return (
+		<div className="view">
+			<ExerciseTracking />;
+		</div>
+	);
 }
 
 export default ExerciseTrackingView;
