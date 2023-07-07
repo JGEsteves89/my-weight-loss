@@ -11,7 +11,7 @@ function WeightGraph() {
 	const { milestone1, milestone2, milestone3 } = getMilestones();
 	return (
 		<ResponsiveContainer width="100%" height="100%">
-			<LineChart data={weights} margin={{ top: 15, right: 30, left: 50, bottom: 5 }}>
+			<LineChart data={weights.sort((a, b) => dayjs(a.date).diff(dayjs(b.date)))} margin={{ top: 15, right: 30, left: 50, bottom: 5 }}>
 				<XAxis
 					dataKey="date"
 					tickLine={false}

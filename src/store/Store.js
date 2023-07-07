@@ -35,6 +35,32 @@ const useWeightStore = create((set, get) => ({
 		get().getMaxWeight() ? (((get().getMaxWeight() - get().getLastWeight()) / (get().getMaxWeight() - get().targetWeight)) * 100) | 0 : null,
 	getCurrentDate: () => dayjs().format('YYYY/MM/DD'),
 }));
+const useCaloriesStore = create((set, get) => ({
+	allCalories: [
+		{ calories: 1200, date: dayjs('2023/07/01').format('YYYY/MM/DD') },
+		{ calories: 1500, date: dayjs('2023/07/02').format('YYYY/MM/DD') },
+		{ calories: 900, date: dayjs('2023/07/04').format('YYYY/MM/DD') },
+		{ calories: 1300, date: dayjs('2023/07/05').format('YYYY/MM/DD') },
+		{ calories: 980, date: dayjs('2023/07/06').format('YYYY/MM/DD') },
+		{ calories: 1986, date: dayjs('2023/07/07').format('YYYY/MM/DD') },
+	],
+	addCaloriesEntry: (calories, date) => {
+		console.log('Added new calories entry:', { calories, date });
+		set((state) => ({
+			allCalories: [...state.allCalories, { calories, date }],
+		}));
+	},
+	targetCalories: 1000,
+	setTargetCalories: (calories) => {
+		set((state) => ({
+			targetCalories: calories,
+		}));
+	},
+	getTodaysCalories: () => {
+		const find = get().allCalories.find((c) => c.date === dayjs().format('YYYY/MM/DD'));
+		return find ? find.calories : 0;
+	},
+}));
 
-const Store = { useWeightStore };
+const Store = { useWeightStore, useCaloriesStore };
 export default Store;

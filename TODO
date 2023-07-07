@@ -35,13 +35,13 @@ The "My Weight Loss" app empowers you to track your progress, stay motivated, an
 ### Task: Implement weight tracking and goal setting functionality
 
 -   [ ] Create components and logic for setting target weight and milestone goals.
--   [ ] Implement weight input form and validation for tracking user weight.
+-   [x] Implement weight input form and validation for tracking user weight.
 -   [ ] Store weight data in a local state or persistent storage (e.g., database or API).
 
 ### Task: Calculate calorie targets and exercise goals
 
 -   [ ] Build algorithms to calculate weekly calorie intake targets based on weight loss goals.
--   [ ] Implement exercise tracking and estimation of calories burned during exercises.
+-   [x] Implement exercise tracking and estimation of calories burned during exercises.
 -   [ ] Develop logic for suggesting daily and weekly exercise goals for the user.
 
 ### Task: Integrate data analysis and visualization features

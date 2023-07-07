@@ -12,8 +12,6 @@ import Store from '../store/Store';
 import WeightGraph from './WeightGraph';
 import ModalWindow from './ModalWindow';
 
-import './WeightTrackingForm.css';
-
 function WeightTrackingForm() {
 	const [open, setOpen] = useState(false);
 	const { getLastWeight, getMaxWeight, getFirstWeightDate, addWeightEntry, targetWeight, getProgress } = Store.useWeightStore();
@@ -37,11 +35,11 @@ function WeightTrackingForm() {
 
 	return (
 		<Box className="component" sx={{ flexGrow: 1 }}>
-			<div className="weight-card">
-				<div className="weight-card-row weight-card-header">
+			<div className="base-card">
+				<div className="base-card-row base-card-header">
 					<div className="justify" />
 					<div className="justify">
-						<h2 className="weight-card-title">Weight</h2>
+						<h2 className="base-card-title">Weight</h2>
 					</div>
 					<div className="justify">
 						<IconButton variant="contained" color="primary" className="top-button" aria-label="Add Weight" onClick={handleOpen}>
@@ -49,30 +47,30 @@ function WeightTrackingForm() {
 						</IconButton>
 					</div>
 				</div>
-				<div className="weight-card-row">
-					<div className="justify weight-card-at-date">
-						<div className="justify weight-card-value-unit">
-							<h2 className="weight-card-value-s">{getMaxWeight()}</h2>
-							<h3 className="weight-card-unit-s">kg</h3>
+				<div className="base-card-row">
+					<div className="justify base-card-at-date">
+						<div className="justify base-card-value-unit">
+							<h2 className="base-card-value-s">{getMaxWeight()}</h2>
+							<h3 className="base-card-unit-s">kg</h3>
 						</div>
-						<div className="weight-card-date">{getFirstWeightDate()}</div>
+						<div className="base-card-date">{getFirstWeightDate()}</div>
 					</div>
-					<div className="justify weight-card-value-unit">
-						<h2 className="weight-card-value">{getLastWeight()}</h2>
-						<h3 className="weight-card-unit">kg</h3>
+					<div className="justify base-card-value-unit">
+						<h2 className="base-card-value">{getLastWeight()}</h2>
+						<h3 className="base-card-unit">kg</h3>
 					</div>
-					<div className="justify weight-card-at-date">
-						<div className="justify weight-card-value-unit">
-							<h2 className="weight-card-value-s">{targetWeight}</h2>
-							<h3 className="weight-card-unit-s">kg</h3>
+					<div className="justify base-card-at-date">
+						<div className="justify base-card-value-unit">
+							<h2 className="base-card-value-s">{targetWeight}</h2>
+							<h3 className="base-card-unit-s">kg</h3>
 						</div>
-						<div className="weight-card-date">{getFirstWeightDate()}</div>
+						<div className="base-card-date">{getFirstWeightDate()}</div>
 					</div>
 				</div>
-				<div className="weight-card-row">
+				<div className="base-card-row">
 					<LinearProgress className="progress-bar" variant="determinate" value={getProgress()} />
 				</div>
-				<div className="weight-card-row weight-card-graph">
+				<div className="base-card-row base-card-graph">
 					<WeightGraph />
 				</div>
 			</div>

@@ -147,3 +147,94 @@ li {
 	padding-inline: 1vw;
 	padding-block: 2vh;
 }
+
+.justify {
+	display: grid;
+	justify-content: center;
+	align-items: center;
+	grid-auto-flow: column;
+}
+.top-button {
+	background-color: rgba(25, 118, 210, 0.1) !important;
+}
+.top-button:hover {
+	background-color: rgba(25, 118, 210, 0.2) !important;
+}
+.base-card {
+	display: grid;
+	grid-template-rows: auto auto auto auto;
+	grid-template-columns: auto;
+	grid-auto-flow: row;
+	margin-inline: 1rem;
+}
+.base-card-row {
+	display: grid;
+	grid-auto-flow: column;
+	grid-template-rows: auto;
+}
+.base-card-header {
+	grid-template-columns: 1rem auto 1rem;
+}
+
+.base-card-title {
+	color: rgba(9, 57, 109, 0.7);
+	text-transform: uppercase;
+	font-size: 1rem;
+}
+
+.base-card-graph {
+	width: auto;
+	height: 12rem;
+	background-color: rgba(25, 118, 210, 0.05) !important;
+	margin-inline: 0rem;
+	border-radius: 1rem;
+	padding: 0rem;
+}
+
+.base-card-value-unit {
+	align-items: baseline;
+	height: 100%;
+	display: grid;
+	align-content: center;
+	margin: 0;
+	padding: 0;
+}
+
+.base-card-value {
+	color: black;
+	font-size: 2rem;
+	margin: 0;
+	padding: 0;
+}
+.base-card-unit {
+	color: rgba(9, 57, 109, 0.7);
+	font-size: 1rem;
+	margin: 0;
+	padding: 0;
+}
+.base-card-at-date {
+	display: flex;
+	flex-flow: column;
+	color: black;
+	font-size: 1rem;
+	margin: 0;
+	padding: 0;
+}
+.base-card-value-s {
+	font-size: 1.1rem;
+	margin: 0;
+	padding: 0;
+}
+.base-card-unit-s {
+	font-size: 0.8rem;
+	margin: 0;
+	padding: 0;
+}
+.base-card-date {
+	color: rgba(9, 57, 109, 0.7);
+	font-size: 0.8rem;
+}
+.progress-bar {
+	margin-bottom: 0.8rem;
+	margin-top: 0.5rem;
+}
