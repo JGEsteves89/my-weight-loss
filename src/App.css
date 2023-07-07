@@ -129,17 +129,21 @@ li {
 .container {
 	max-width: 800px;
 	margin: 0 auto;
-	padding: 20px;
+	padding: 1vw;
 }
 
 .view {
-	margin: 0.5rem;
-	padding: 0.5rem;
+	margin-inline: 1vw;
+	margin-block: 0.5vh;
+	padding-inline: 1vw;
+	padding-block: 0.5vh;
 }
 
 .component {
 	background-color: #fff;
 	border-radius: 1rem;
-	margin: 1rem;
-	padding: 1rem;
+	margin-inline: 1vw;
+	margin-block: 2vh;
+	padding-inline: 1vw;
+	padding-block: 2vh;
 }

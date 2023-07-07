@@ -26,22 +26,51 @@
 	font-size: 1rem;
 }
 
+.top-button {
+	background-color: rgba(25, 118, 210, 0.1) !important;
+}
+.top-button:hover {
+	background-color: rgba(25, 118, 210, 0.2) !important;
+}
+.weight-card-graph {
+	width: auto;
+	height: 12rem;
+	background-color: rgba(25, 118, 210, 0.05) !important;
+	margin-inline: 0rem;
+	border-radius: 1rem;
+	padding: 0rem;
+}
+
 .weight-card-value-unit {
 	align-items: baseline;
+	height: 40%;
 }
 
 .weight-card-value {
 	color: black;
 	font-size: 2rem;
 }
-
 .weight-card-unit {
 	color: rgba(9, 57, 109, 0.7);
 	font-size: 1rem;
 }
-.top-button {
-	background-color: rgba(25, 118, 210, 0.1) !important;
+.weight-card-at-date {
+	display: flex;
+	flex-flow: column;
+	color: black;
+	font-size: 1rem;
 }
-.top-button:hover {
-	background-color: rgba(25, 118, 210, 0.2) !important;
+.weight-card-value-s {
+	font-size: 1.1rem;
+}
+.weight-card-unit-s {
+	font-size: 0.8rem;
+}
+.weight-card-date {
+	color: rgba(9, 57, 109, 0.7);
+	font-size: 0.8rem;
+}
+.progress-bar {
+	margin-bottom: 0.8rem;
+	margin-top: -0.5rem;
 }
