@@ -5,12 +5,12 @@ import { BarChart, Bar, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recha
 
 import Store from '../store/Store';
 
-function CaloriesGraph() {
-	const { allCalories, targetCalories } = Store.useCaloriesStore();
+function ExerciseGraph() {
+	const { allExercise, targetExercise } = Store.useExerciseStore();
 	const data = [];
-	for (const day of allCalories.sort((a, b) => dayjs(a.date).diff(dayjs(b.date))).slice(-7)) {
-		const cals = day.calories;
-		data.push({ date: day.date, green: cals <= targetCalories ? cals : null, red: cals > targetCalories ? cals : null });
+	for (const day of allExercise.sort((a, b) => dayjs(a.date).diff(dayjs(b.date))).slice(-7)) {
+		const exercise = day.exercise;
+		data.push({ date: day.date, red: exercise < targetExercise ? exercise : null, green: exercise >= targetExercise ? exercise : null });
 	}
 	return (
 		<ResponsiveContainer width="100%" height="100%">
@@ -32,4 +32,4 @@ function CaloriesGraph() {
 	);
 }
 
-export default CaloriesGraph;
+export default ExerciseGraph;

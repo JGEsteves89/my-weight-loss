@@ -62,5 +62,31 @@ const useCaloriesStore = create((set, get) => ({
 	},
 }));
 
-const Store = { useWeightStore, useCaloriesStore };
+const useExerciseStore = create((set, get) => ({
+	allExercise: [
+		{ exercise: 120, date: dayjs('2023/07/01').format('YYYY/MM/DD') },
+		{ exercise: 300, date: dayjs('2023/07/02').format('YYYY/MM/DD') },
+		{ exercise: 90, date: dayjs('2023/07/04').format('YYYY/MM/DD') },
+		{ exercise: 130, date: dayjs('2023/07/05').format('YYYY/MM/DD') },
+		{ exercise: 320, date: dayjs('2023/07/06').format('YYYY/MM/DD') },
+		{ exercise: 198, date: dayjs('2023/07/07').format('YYYY/MM/DD') },
+	],
+	addExerciseEntry: (exercise, date) => {
+		console.log('Added new exercise entry:', { exercise, date });
+		set((state) => ({
+			allExercise: [...state.allExercise, { exercise, date }],
+		}));
+	},
+	targetExercise: 300,
+	setTargetExercise: (exercise) => {
+		set((state) => ({
+			targetExercise: exercise,
+		}));
+	},
+	getTodaysExercise: () => {
+		const find = get().allExercise.find((c) => c.date === dayjs().format('YYYY/MM/DD'));
+		return find ? find.exercise : 0;
+	},
+}));
+const Store = { useWeightStore, useCaloriesStore, useExerciseStore };
 export default Store;
