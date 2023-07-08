@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-import { IconButton, Box, LinearProgress } from '@mui/material';
+import { IconButton, Box, LinearProgress, TextField } from '@mui/material';
 import { DateCalendar } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -81,14 +81,16 @@ function WeightTrackingForm() {
 						<LocalizationProvider dateAdapter={AdapterDayjs}>
 							<DateCalendar value={weightDate} disableFuture onChange={(newValue) => setWeightDate(newValue)} />
 						</LocalizationProvider>
-						<input
-							type="number"
+						<TextField
+							variant="standard"
+							className="base-text-field"
 							id="weightInput"
+							label="Enter weight in kilograms"
+							type="number"
 							value={weight}
 							onChange={(e) => {
 								setWeight(+e.target.value);
 							}}
-							placeholder="Enter weight in kilograms"
 							required
 						/>
 						<button type="submit">Track Weight</button>

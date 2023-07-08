@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-import { IconButton, Box } from '@mui/material';
+import { IconButton, Box, TextField } from '@mui/material';
 import { DateCalendar } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -11,9 +11,11 @@ import Store from '../store/Store';
 
 import ExerciseGraph from './ExerciseGraph';
 import ModalWindow from './ModalWindow';
+import SetTargetsForm from './SetTargetForm';
 
 function ExerciseTracking() {
 	const [open, setOpen] = useState(false);
+	const [openSetTarget, setOpenSetTarget] = useState(false);
 	const { addExerciseEntry, targetExercise, getTodaysExercise } = Store.useExerciseStore();
 
 	const [exercise, setExercise] = useState(targetExercise);
@@ -33,6 +35,14 @@ function ExerciseTracking() {
 		handleClose();
 	};
 
+	const handleOpenSetTarget = () => {
+		setOpenSetTarget(true);
+	};
+
+	const handleCloseSetTarget = () => {
+		setOpenSetTarget(false);
+	};
+
 	return (
 		<Box className="component" sx={{ flexGrow: 1 }}>
 			<div className="base-card">
@@ -50,6 +60,10 @@ function ExerciseTracking() {
 				<div className="base-card-row">
 					<div className="justify base-card-value-unit calories-card-value-unit">
 						<h2 className="base-card-value">{getTodaysExercise()}</h2>
+						<h3 className="base-card-unit">of</h3>
+						<h3 className="base-card-value-s clicable" onClick={handleOpenSetTarget}>
+							{targetExercise}
+						</h3>
 						<h3 className="base-card-unit">cals</h3>
 					</div>
 				</div>
@@ -64,60 +78,27 @@ function ExerciseTracking() {
 						<LocalizationProvider dateAdapter={AdapterDayjs}>
 							<DateCalendar value={exerciseDate} disableFuture onChange={(newValue) => setExerciseDate(newValue)} />
 						</LocalizationProvider>
-						<input
-							type="number"
+						<TextField
+							variant="standard"
+							className="base-text-field"
 							id="exerciseInput"
+							label="Enter exercise of the day"
+							type="number"
 							value={exercise}
 							onChange={(e) => {
 								setExercise(+e.target.value);
 							}}
-							placeholder="Enter exercise of the day"
 							required
 						/>
 						<button type="submit">Track Exercise</button>
 					</form>
 				</Box>
 			</ModalWindow>
+			<ModalWindow open={openSetTarget} onClose={handleCloseSetTarget}>
+				<SetTargetsForm onSubmitEnd={() => handleCloseSetTarget()} />
+			</ModalWindow>
 		</Box>
 	);
 }
 
 export default ExerciseTracking;
-
-// import React, { useState } from 'react';
-
-// function ExerciseTracking() {
-// 	const [exerciseMinutes, setExerciseMinutes] = useState('');
-
-// 	const handleSubmit = (e) => {
-// 		e.preventDefault();
-// 		// Logic to handle form submission and exercise tracking
-// 		console.log('Exercise minutes:', exerciseMinutes);
-// 		// You can add your own logic here to handle the exercise tracking data
-// 		// For example, you can make an API request to save the exercise minutes data to a database
-// 	};
-
-// 	const handleChange = (e) => {
-// 		setExerciseMinutes(e.target.value);
-// 	};
-
-// 	return (
-// 		<div className="component">
-// 			<h2>Exercise Tracking</h2>
-// 			<form onSubmit={handleSubmit}>
-// 				<label htmlFor="exerciseMinutesInput">Exercise Minutes:</label>
-// 				<input
-// 					type="number"
-// 					id="exerciseMinutesInput"
-// 					value={exerciseMinutes}
-// 					onChange={handleChange}
-// 					placeholder="Enter exercise minutes"
-// 					required
-// 				/>
-// 				<button type="submit">Track Exercise</button>
-// 			</form>
-// 		</div>
-// 	);
-// }
-
-// export default ExerciseTracking;

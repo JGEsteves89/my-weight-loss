@@ -141,10 +141,10 @@ li {
 
 .component {
 	background-color: #fff;
-	border-radius: 1rem;
-	margin-inline: 1vw;
-	margin-block: 2vh;
-	padding-inline: 1vw;
+	border-radius: 0.5rem;
+	margin-inline: 0.5vw;
+	margin-block: 1vh;
+	padding-inline: 0.5vw;
 	padding-block: 2vh;
 }
 
@@ -187,6 +187,7 @@ li {
 	height: 12rem;
 	background-color: rgba(25, 118, 210, 0.05) !important;
 	margin-inline: 0rem;
+	margin-block: 0.5rem;
 	border-radius: 1rem;
 	padding: 0rem;
 }
@@ -211,6 +212,13 @@ li {
 	font-size: 1rem;
 	margin: 0;
 	padding: 0;
+	padding-inline: 0.2rem;
+}
+.base-card-unit-s {
+	font-size: 0.8rem;
+	margin: 0;
+	padding: 0;
+	padding-inline: 0.2rem;
 }
 .base-card-at-date {
 	display: flex;
@@ -225,11 +233,7 @@ li {
 	margin: 0;
 	padding: 0;
 }
-.base-card-unit-s {
-	font-size: 0.8rem;
-	margin: 0;
-	padding: 0;
-}
+
 .base-card-date {
 	color: rgba(9, 57, 109, 0.7);
 	font-size: 0.8rem;
@@ -237,4 +241,14 @@ li {
 .progress-bar {
 	margin-bottom: 0.8rem;
 	margin-top: 0.5rem;
+}
+.clicable {
+	color: #1976d2;
+	background-color: rgba(25, 118, 210, 0.1) !important;
+	padding: 0.5rem;
+	border-radius: 1rem;
+	cursor: pointer;
+}
+.base-text-field {
+	margin-block: 1rem !important;
 }

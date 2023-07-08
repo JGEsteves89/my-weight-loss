@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-import { IconButton, Box } from '@mui/material';
+import { IconButton, Box, TextField } from '@mui/material';
 import { DateCalendar } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -11,9 +11,11 @@ import Store from '../store/Store';
 
 import CaloriesGraph from './CaloriesGraph';
 import ModalWindow from './ModalWindow';
+import SetTargetsForm from './SetTargetForm';
 
 function CalorieTracking() {
 	const [open, setOpen] = useState(false);
+	const [openSetTarget, setOpenSetTarget] = useState(false);
 	const { addCaloriesEntry, targetCalories, getTodaysCalories } = Store.useCaloriesStore();
 
 	const [calories, setCalories] = useState(targetCalories);
@@ -33,6 +35,14 @@ function CalorieTracking() {
 		handleClose();
 	};
 
+	const handleOpenSetTarget = () => {
+		setOpenSetTarget(true);
+	};
+
+	const handleCloseSetTarget = () => {
+		setOpenSetTarget(false);
+	};
+
 	return (
 		<Box className="component" sx={{ flexGrow: 1 }}>
 			<div className="base-card">
@@ -50,6 +60,10 @@ function CalorieTracking() {
 				<div className="base-card-row">
 					<div className="justify base-card-value-unit calories-card-value-unit">
 						<h2 className="base-card-value">{getTodaysCalories()}</h2>
+						<h3 className="base-card-unit">of</h3>
+						<h3 className="base-card-value-s clicable" onClick={handleOpenSetTarget}>
+							{targetCalories}
+						</h3>
 						<h3 className="base-card-unit">cals</h3>
 					</div>
 				</div>
@@ -64,19 +78,24 @@ function CalorieTracking() {
 						<LocalizationProvider dateAdapter={AdapterDayjs}>
 							<DateCalendar value={caloriesDate} disableFuture onChange={(newValue) => setCaloriesDate(newValue)} />
 						</LocalizationProvider>
-						<input
-							type="number"
+						<TextField
+							variant="standard"
+							className="base-text-field"
 							id="caloriesInput"
+							label="Enter calories of the day"
+							type="number"
 							value={calories}
 							onChange={(e) => {
 								setCalories(+e.target.value);
 							}}
-							placeholder="Enter calories of the day"
 							required
 						/>
 						<button type="submit">Track Calories</button>
 					</form>
 				</Box>
+			</ModalWindow>
+			<ModalWindow open={openSetTarget} onClose={handleCloseSetTarget}>
+				<SetTargetsForm onSubmitEnd={() => handleCloseSetTarget()} />
 			</ModalWindow>
 		</Box>
 	);
