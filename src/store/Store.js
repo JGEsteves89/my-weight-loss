@@ -3,12 +3,10 @@ import { create } from 'zustand';
 
 const useWeightStore = create((set, get) => ({
 	weights: [
-		{ weight: 100, date: dayjs('2023/07/01').format('YYYY/MM/DD') },
-		{ weight: 99, date: dayjs('2023/07/02').format('YYYY/MM/DD') },
-		{ weight: 98.5, date: dayjs('2023/07/04').format('YYYY/MM/DD') },
 		{ weight: 98, date: dayjs('2023/07/05').format('YYYY/MM/DD') },
 		{ weight: 96.7, date: dayjs('2023/07/06').format('YYYY/MM/DD') },
 		{ weight: 96.3, date: dayjs('2023/07/07').format('YYYY/MM/DD') },
+		{ weight: 95.3, date: dayjs('2023/07/08').format('YYYY/MM/DD') },
 	],
 	addWeightEntry: (weight, date) => {
 		console.log('Added new weight entry:', { weight, date });
@@ -37,12 +35,9 @@ const useWeightStore = create((set, get) => ({
 }));
 const useCaloriesStore = create((set, get) => ({
 	allCalories: [
-		{ calories: 1200, date: dayjs('2023/07/01').format('YYYY/MM/DD') },
-		{ calories: 1500, date: dayjs('2023/07/02').format('YYYY/MM/DD') },
-		{ calories: 900, date: dayjs('2023/07/04').format('YYYY/MM/DD') },
-		{ calories: 1300, date: dayjs('2023/07/05').format('YYYY/MM/DD') },
-		{ calories: 980, date: dayjs('2023/07/06').format('YYYY/MM/DD') },
-		{ calories: 1986, date: dayjs('2023/07/07').format('YYYY/MM/DD') },
+		{ calories: 2000, date: dayjs('2023/07/05').format('YYYY/MM/DD') },
+		{ calories: 2000, date: dayjs('2023/07/06').format('YYYY/MM/DD') },
+		{ calories: 2000, date: dayjs('2023/07/07').format('YYYY/MM/DD') },
 	],
 	addCaloriesEntry: (calories, date) => {
 		console.log('Added new calories entry:', { calories, date });
@@ -50,7 +45,7 @@ const useCaloriesStore = create((set, get) => ({
 			allCalories: [...state.allCalories, { calories, date }],
 		}));
 	},
-	targetCalories: 1000,
+	targetCalories: 2000,
 	setTargetCalories: (calories) => {
 		set((state) => ({
 			targetCalories: calories,
@@ -64,12 +59,9 @@ const useCaloriesStore = create((set, get) => ({
 
 const useExerciseStore = create((set, get) => ({
 	allExercise: [
-		{ exercise: 120, date: dayjs('2023/07/01').format('YYYY/MM/DD') },
-		{ exercise: 300, date: dayjs('2023/07/02').format('YYYY/MM/DD') },
-		{ exercise: 90, date: dayjs('2023/07/04').format('YYYY/MM/DD') },
-		{ exercise: 130, date: dayjs('2023/07/05').format('YYYY/MM/DD') },
-		{ exercise: 320, date: dayjs('2023/07/06').format('YYYY/MM/DD') },
-		{ exercise: 198, date: dayjs('2023/07/07').format('YYYY/MM/DD') },
+		{ exercise: 228, date: dayjs('2023/07/05').format('YYYY/MM/DD') },
+		{ exercise: 229, date: dayjs('2023/07/06').format('YYYY/MM/DD') },
+		{ exercise: 200, date: dayjs('2023/07/07').format('YYYY/MM/DD') },
 	],
 	addExerciseEntry: (exercise, date) => {
 		console.log('Added new exercise entry:', { exercise, date });
@@ -88,5 +80,27 @@ const useExerciseStore = create((set, get) => ({
 		return find ? find.exercise : 0;
 	},
 }));
-const Store = { useWeightStore, useCaloriesStore, useExerciseStore };
+
+const useMilestonesStore = create((set, get) => ({
+	milestonesGifts: [
+		{ milestone: 1, gift: '50£ in T-shirts', claimed: false, targetWeight: 0, achieved: false },
+		{ milestone: 2, gift: 'Extravagância para a Alba', claimed: false, targetWeight: 0, achieved: false },
+		{ milestone: 3, gift: 'PC', claimed: false, targetWeight: 0, achieved: false },
+	],
+	setMilestonesGifts: (gifts) => {
+		console.log('Milestones gifts modified:', gifts);
+		set((state) => ({
+			milestonesGifts: gifts,
+		}));
+	},
+	getMilestonesGifts: (weightMilestones, currentWeight) => {
+		const milestonesGifts = get().milestonesGifts;
+		for (let i = 0; i < milestonesGifts.length; i++) {
+			milestonesGifts[i].targetWeight = weightMilestones[i];
+			milestonesGifts[i].achieved = currentWeight < weightMilestones[i];
+		}
+		return milestonesGifts;
+	},
+}));
+const Store = { useWeightStore, useCaloriesStore, useExerciseStore, useMilestonesStore };
 export default Store;

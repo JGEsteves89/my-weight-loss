@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Card, CardContent } from '@mui/material';
+import { Grid } from '@mui/material';
 
 import CalorieTracking from '../components/CalorieTracking';
 import DataAnalysisVisualization from '../components/DataAnalysisVisualization';
@@ -20,9 +20,7 @@ function HomeView() {
 			<Grid container spacing={2}>
 				{cards.map((card) => (
 					<Grid item xs={12} sm={6} key={card.id}>
-						<Card style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-							<CardContent style={{ flexGrow: 1 }}>{card.html}</CardContent>
-						</Card>
+						<div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', height: '100%' }}>{card.html}</div>
 					</Grid>
 				))}
 			</Grid>
