@@ -146,6 +146,8 @@ li {
 	margin-block: 1vh;
 	padding-inline: 0.5vw;
 	padding-block: 2vh;
+	width: 100%;
+	height: 100%;
 }
 
 .justify {
@@ -183,8 +185,8 @@ li {
 }
 
 .base-card-graph {
-	width: auto;
-	height: 12rem;
+	width: 100%;
+	height: 35vh;
 	background-color: rgba(25, 118, 210, 0.05) !important;
 	margin-inline: 0rem;
 	margin-block: 0.5rem;
