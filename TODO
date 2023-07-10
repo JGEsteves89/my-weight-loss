@@ -28,15 +28,15 @@ The "My Weight Loss" app empowers you to track your progress, stay motivated, an
 
 ### Task: Design and implement UI components
 
--   [ ] Create UI wireframes and design the user interface.
--   [ ] Develop reusable React components for various app screens.
--   [ ] Apply styling and ensure responsive design using CSS or a styling framework like Bootstrap or Material-UI.
+-   [x] Create UI wireframes and design the user interface.
+-   [x] Develop reusable React components for various app screens.
+-   [x] Apply styling and ensure responsive design using CSS or a styling framework like Bootstrap or Material-UI.
 
 ### Task: Implement weight tracking and goal setting functionality
 
--   [ ] Create components and logic for setting target weight and milestone goals.
+-   [x] Create components and logic for setting target weight and milestone goals.
 -   [x] Implement weight input form and validation for tracking user weight.
--   [ ] Store weight data in a local state or persistent storage (e.g., database or API).
+-   [x] Store weight data in a local state or persistent storage (e.g., database or API).
 
 ### Task: Calculate calorie targets and exercise goals
 
@@ -52,8 +52,8 @@ The "My Weight Loss" app empowers you to track your progress, stay motivated, an
 
 ### Task: Implement milestone and reward system
 
--   [ ] Design a user interface for displaying milestones and rewards.
--   [ ] Develop logic to detect milestone achievements and trigger reward notifications.
+-   [x] Design a user interface for displaying milestones and rewards.
+-   [x] Develop logic to detect milestone achievements and trigger reward notifications.
 -   [ ] Allow users to choose rewards and track their progress towards earning them.
 
 ### Task: Testing and bug fixing
@@ -67,6 +67,22 @@ The "My Weight Loss" app empowers you to track your progress, stay motivated, an
 -   [ ] Document the app's functionality, setup instructions, and usage guidelines.
 -   [ ] Prepare the app for deployment by optimizing code, assets, and configurations.
 -   [ ] Deploy the web app to a hosting environment or platform of your choice.
+
+### Task: Small tasks and bug fixes
+
+-   [x] Decouple the sensitive data
+-   [x] Prevent weight to be set twice on the same date
+-   [x] Only push data when the data is validated
+-   [x] Had a middleware route depending on the current user
+-   [ ] Fix annoying bug where loading page gets stuck after code update
+-   [ ] Create a selection of user
+-   [ ] Fix color and theme
+-   [ ] Create a specific view for rewards with a progress bar and option to claim them
+-   [ ] Create a calendar view of good days and bad days
+-   [ ] Create a calendar view of good weeks and bad weeks
+-   [ ] Calculate the expected time of arrival of target
+-   [ ] Calculate the expected time of goal
+-   [ ] Create view with suggested modification into targets per grade of difficulty
 
 ## UI Components:
 

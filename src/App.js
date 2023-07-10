@@ -1,14 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
-
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
+import { AppBar, Box } from '@mui/material';
 
 import HomeView from './views/HomeView';
-import CaloriesTrakingView from './views/CaloriesTrakingView';
-import ExerciseTrackingView from './views/ExerciseTrackingView';
-import MilestonesAndRewardsView from './views/MilestonesAndRewardsView';
 
 import './App.css';
 
@@ -21,10 +16,7 @@ function App() {
 			<Router>
 				<div className="container">
 					<Routes>
-						<Route exact path="/" element={<HomeView />}></Route>
-						<Route path="/calorie-tracking" element={<CaloriesTrakingView />}></Route>
-						<Route path="/exercise-tracking" element={<ExerciseTrackingView />}></Route>
-						<Route path="/milestones-and-rewards" element={<MilestonesAndRewardsView />}></Route>
+						<Route exact path={`/:username/`} element={<HomeView />}></Route>
 					</Routes>
 				</div>
 			</Router>

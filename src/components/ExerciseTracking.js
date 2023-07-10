@@ -16,7 +16,7 @@ import SetTargetsForm from './SetTargetForm';
 function ExerciseTracking() {
 	const [open, setOpen] = useState(false);
 	const [openSetTarget, setOpenSetTarget] = useState(false);
-	const { addExerciseEntry, targetExercise, getTodaysExercise } = Store.useExerciseStore();
+	const { addExerciseEntry, targetExercise, getLastExercise } = Store.useExerciseStore();
 
 	const [exercise, setExercise] = useState(targetExercise);
 	const [exerciseDate, setExerciseDate] = useState(dayjs());
@@ -31,7 +31,7 @@ function ExerciseTracking() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		addExerciseEntry(exercise, exerciseDate.format('YYYY/MM/DD'));
+		addExerciseEntry(+exercise, exerciseDate.format('YYYY/MM/DD'));
 		handleClose();
 	};
 
@@ -59,7 +59,7 @@ function ExerciseTracking() {
 				</div>
 				<div className="base-card-row">
 					<div className="justify base-card-value-unit calories-card-value-unit">
-						<h2 className="base-card-value">{getTodaysExercise()}</h2>
+						<h2 className="base-card-value">{getLastExercise()}</h2>
 						<h3 className="base-card-unit">of</h3>
 						<h3 className="base-card-value-s clicable" onClick={handleOpenSetTarget}>
 							{targetExercise}
@@ -86,7 +86,7 @@ function ExerciseTracking() {
 							type="number"
 							value={exercise}
 							onChange={(e) => {
-								setExercise(+e.target.value);
+								setExercise(e.target.value);
 							}}
 							required
 						/>

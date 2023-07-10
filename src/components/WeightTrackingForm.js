@@ -16,7 +16,7 @@ function WeightTrackingForm() {
 	const [open, setOpen] = useState(false);
 	const { getLastWeight, getMaxWeight, getFirstWeightDate, addWeightEntry, targetWeight, getProgress } = Store.useWeightStore();
 
-	const [weight, setWeight] = useState(getLastWeight());
+	const [weight, setWeight] = useState(getLastWeight() | 0);
 	const [weightDate, setWeightDate] = useState(dayjs());
 
 	const handleOpen = () => {
@@ -29,7 +29,7 @@ function WeightTrackingForm() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		addWeightEntry(weight, weightDate.format('YYYY/MM/DD'));
+		addWeightEntry(+weight, weightDate.format('YYYY/MM/DD'));
 		handleClose();
 	};
 
@@ -89,7 +89,7 @@ function WeightTrackingForm() {
 							type="number"
 							value={weight}
 							onChange={(e) => {
-								setWeight(+e.target.value);
+								setWeight(e.target.value);
 							}}
 							required
 						/>

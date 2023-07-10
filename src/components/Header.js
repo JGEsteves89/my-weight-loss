@@ -11,6 +11,7 @@ function Header() {
 			<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
 				My Weight Loss App
 			</Typography>
+			<div className="version-tag">v0.0.1</div>
 			<Button color="inherit">Login</Button>
 		</Toolbar>
 	);

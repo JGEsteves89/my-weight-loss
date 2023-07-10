@@ -16,7 +16,7 @@ import SetTargetsForm from './SetTargetForm';
 function CalorieTracking() {
 	const [open, setOpen] = useState(false);
 	const [openSetTarget, setOpenSetTarget] = useState(false);
-	const { addCaloriesEntry, targetCalories, getTodaysCalories } = Store.useCaloriesStore();
+	const { addCaloriesEntry, targetCalories, getLastCalories } = Store.useCaloriesStore();
 
 	const [calories, setCalories] = useState(targetCalories);
 	const [caloriesDate, setCaloriesDate] = useState(dayjs());
@@ -31,7 +31,7 @@ function CalorieTracking() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		addCaloriesEntry(calories, caloriesDate.format('YYYY/MM/DD'));
+		addCaloriesEntry(+calories, caloriesDate.format('YYYY/MM/DD'));
 		handleClose();
 	};
 
@@ -59,7 +59,7 @@ function CalorieTracking() {
 				</div>
 				<div className="base-card-row">
 					<div className="justify base-card-value-unit calories-card-value-unit">
-						<h2 className="base-card-value">{getTodaysCalories()}</h2>
+						<h2 className="base-card-value">{getLastCalories()}</h2>
 						<h3 className="base-card-unit">of</h3>
 						<h3 className="base-card-value-s clicable" onClick={handleOpenSetTarget}>
 							{targetCalories}
@@ -86,7 +86,7 @@ function CalorieTracking() {
 							type="number"
 							value={calories}
 							onChange={(e) => {
-								setCalories(+e.target.value);
+								setCalories(e.target.value);
 							}}
 							required
 						/>

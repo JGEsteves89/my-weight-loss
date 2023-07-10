@@ -1,26 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, TextField, Button } from '@mui/material';
 import { green, blue } from '@mui/material/colors';
 import Store from '../store/Store';
 
 function SetTargetsForm({ onSubmitEnd }) {
+	const { targetWeight, setTargetWeight, getMilestones, getLastWeight } = Store.useWeightStore();
 	const { targetExercise, setTargetExercise } = Store.useExerciseStore();
 	const { targetCalories, setTargetCalories } = Store.useCaloriesStore();
-	const { targetWeight, setTargetWeight, getMilestones, getLastWeight } = Store.useWeightStore();
 	const { milestone1, milestone2, milestone3 } = getMilestones();
 	const { getMilestonesGifts, setMilestonesGifts } = Store.useMilestonesStore();
 	const milestoneGifts = getMilestonesGifts([milestone1, milestone2, milestone3], getLastWeight());
+
+	const [localTargetWeight, setLocalTargetWeight] = useState(targetWeight);
+	const [localTargetExercise, setLocalTargetExercise] = useState(targetExercise);
+	const [localTargetCalories, setLocalTargetCalories] = useState(targetCalories);
+	const [localMilestoneGifts, setLocalMilestoneGifts] = useState(milestoneGifts);
+
+	const handleFormSubmit = (e) => {
+		e.preventDefault();
+		if (localTargetExercise !== targetExercise) setTargetExercise(+localTargetExercise);
+		if (localTargetCalories !== targetCalories) setTargetCalories(+localTargetCalories);
+		if (localTargetWeight !== targetWeight) setTargetWeight(+localTargetWeight);
+
+		let changeMilestones = false;
+		for (let i = 0; i < localMilestoneGifts.length; i++) {
+			if (localMilestoneGifts[i].gift !== milestoneGifts[i].gift || localMilestoneGifts[i].claimed !== milestoneGifts[i].claimed) {
+				changeMilestones = true;
+				break;
+			}
+		}
+		if (changeMilestones) setMilestonesGifts(localMilestoneGifts);
+		if (onSubmitEnd) {
+			onSubmitEnd();
+		}
+	};
+
 	return (
 		<Box style={{ padding: '1rem' }}>
-			<form
-				onSubmit={(e) => {
-					e.preventDefault();
-					setTargetExercise(targetExercise);
-					setTargetCalories(targetCalories);
-					if (onSubmitEnd) {
-						onSubmitEnd();
-					}
-				}}>
+			<form onSubmit={handleFormSubmit}>
 				<label htmlFor="TargetsInput">Set targets:</label>
 				<Box sx={{ flexGrow: 1 }}>
 					<TextField
@@ -29,9 +46,9 @@ function SetTargetsForm({ onSubmitEnd }) {
 						id="weightTargetInput"
 						label="Target weight (kg)"
 						type="number"
-						value={targetWeight}
+						value={localTargetWeight}
 						onChange={(e) => {
-							setTargetWeight(+e.target.value);
+							setLocalTargetWeight(e.target.value);
 						}}
 						required
 						fullWidth
@@ -42,9 +59,9 @@ function SetTargetsForm({ onSubmitEnd }) {
 						id="exerciseTargetInput"
 						label="Target exercise per day"
 						type="number"
-						value={targetExercise}
+						value={localTargetExercise}
 						onChange={(e) => {
-							setTargetExercise(+e.target.value);
+							setLocalTargetExercise(e.target.value);
 						}}
 						required
 						fullWidth
@@ -55,16 +72,16 @@ function SetTargetsForm({ onSubmitEnd }) {
 						id="caloriesTargetInput"
 						label="Target calories per day"
 						type="targetCalories"
-						value={targetCalories}
+						value={localTargetCalories}
 						onChange={(e) => {
-							setTargetCalories(+e.target.value);
+							setLocalTargetCalories(e.target.value);
 						}}
 						required
 						fullWidth
 					/>
 
 					<h3>Gifts:</h3>
-					{milestoneGifts.map((milestoneGift) => (
+					{localMilestoneGifts.map((milestoneGift, i) => (
 						<Box className="base-goal-row" key={milestoneGift.milestone}>
 							<TextField
 								variant="standard"
@@ -74,8 +91,12 @@ function SetTargetsForm({ onSubmitEnd }) {
 								type="string"
 								value={milestoneGift.gift}
 								onChange={(e) => {
-									milestoneGift.gift = e.target.value;
-									setMilestonesGifts(milestoneGifts);
+									const updatedGifts = [...localMilestoneGifts];
+									updatedGifts[i] = {
+										...updatedGifts[i],
+										gift: e.target.value,
+									};
+									setLocalMilestoneGifts(updatedGifts);
 								}}
 								sx={{ width: '70%' }}
 							/>
@@ -92,7 +113,7 @@ function SetTargetsForm({ onSubmitEnd }) {
 								}}
 								onClick={() => {
 									milestoneGift.claimed = true;
-									setMilestonesGifts(milestoneGifts);
+									setLocalMilestoneGifts(localMilestoneGifts);
 								}}>
 								{milestoneGift.claimed ? 'Claimed' : 'Claim'}
 							</Button>

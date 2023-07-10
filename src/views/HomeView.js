@@ -1,8 +1,10 @@
-import React from 'react';
-import { Grid } from '@mui/material';
+import React, { useEffect } from 'react';
+import { Grid, CircularProgress } from '@mui/material';
+import { useParams } from 'react-router-dom';
+
+import Store from '../store/Store';
 
 import CalorieTracking from '../components/CalorieTracking';
-import DataAnalysisVisualization from '../components/DataAnalysisVisualization';
 import ExerciseTracking from '../components/ExerciseTracking';
 import GoalSettingForm from '../components/GoalSettingForm';
 import WeightTrackingForm from '../components/WeightTrackingForm';
@@ -13,8 +15,25 @@ function HomeView() {
 		{ id: 2, html: <CalorieTracking /> },
 		{ id: 3, html: <ExerciseTracking /> },
 		{ id: 4, html: <GoalSettingForm /> },
-		{ id: 5, html: <DataAnalysisVisualization /> },
 	];
+
+	const { ready, user, setUser } = Store.useUserDataStore();
+	const { username } = useParams();
+
+	useEffect(() => {
+		if (username !== user) {
+			setUser(username);
+		}
+	}, [user, username, setUser]);
+
+	if (!ready) {
+		return (
+			<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+				<CircularProgress />
+			</div>
+		);
+	}
+
 	return (
 		<div className="view">
 			<Grid container spacing={2}>

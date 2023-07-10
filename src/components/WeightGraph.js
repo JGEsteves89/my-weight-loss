@@ -9,9 +9,10 @@ function WeightGraph() {
 	const { weights, getMaxWeight, getMilestones } = Store.useWeightStore();
 	const maxWeight = getMaxWeight();
 	const { milestone1, milestone2, milestone3 } = getMilestones();
+	const sortedWeight = weights.sort((a, b) => dayjs(a.date).diff(dayjs(b.date)));
 	return (
 		<ResponsiveContainer width="100%" height="100%">
-			<LineChart data={weights.sort((a, b) => dayjs(a.date).diff(dayjs(b.date)))} margin={{ top: 15, right: 30, left: 50, bottom: 20 }}>
+			<LineChart data={sortedWeight} margin={{ top: 15, right: 30, left: 50, bottom: 20 }}>
 				<XAxis
 					dataKey="date"
 					tickLine={false}
