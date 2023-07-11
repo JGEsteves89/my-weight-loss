@@ -47,8 +47,8 @@ The "My Weight Loss" app empowers you to track your progress, stay motivated, an
 ### Task: Integrate data analysis and visualization features
 
 -   [ ] Implement data analysis algorithms to calculate KPIs such as Healthy Index and weekly weight loss.
--   [ ] Create graphs and visualizations to display weight progress and daily calorie intake.
--   [ ] Ensure the accuracy and responsiveness of the data analysis and visualization components.
+-   [x] Create graphs and visualizations to display weight progress and daily calorie intake.
+-   [x] Ensure the accuracy and responsiveness of the data analysis and visualization components.
 
 ### Task: Implement milestone and reward system
 
@@ -74,14 +74,14 @@ The "My Weight Loss" app empowers you to track your progress, stay motivated, an
 -   [x] Prevent weight to be set twice on the same date
 -   [x] Only push data when the data is validated
 -   [x] Had a middleware route depending on the current user
+-   [x] Fix color and theme
 -   [ ] Fix annoying bug where loading page gets stuck after code update
 -   [ ] Create a selection of user
--   [ ] Fix color and theme
 -   [ ] Create a specific view for rewards with a progress bar and option to claim them
 -   [ ] Create a calendar view of good days and bad days
 -   [ ] Create a calendar view of good weeks and bad weeks
 -   [ ] Calculate the expected time of arrival of target
--   [ ] Calculate the expected time of goal
+-   [ ] Calculate the expected time of goal/gift
 -   [ ] Create view with suggested modification into targets per grade of difficulty
 
 ## UI Components:

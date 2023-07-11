@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Grid, CircularProgress } from '@mui/material';
+import { Grid, Box, CircularProgress } from '@mui/material';
 import { useParams } from 'react-router-dom';
 
 import Store from '../store/Store';
@@ -35,15 +35,13 @@ function HomeView() {
 	}
 
 	return (
-		<div className="view">
-			<Grid container spacing={2}>
-				{cards.map((card) => (
-					<Grid item xs={12} sm={6} key={card.id}>
-						<div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', height: '100%' }}>{card.html}</div>
-					</Grid>
-				))}
-			</Grid>
-		</div>
+		<Grid container spacing={2}>
+			{cards.map((card) => (
+				<Grid item xs={12} sm={6} key={card.id} sx={{ marginTop: '1rem' }}>
+					<Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>{card.html}</Box>
+				</Grid>
+			))}
+		</Grid>
 	);
 }
 

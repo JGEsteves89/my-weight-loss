@@ -1,25 +1,26 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Header from './components/Header';
-import { AppBar, Box } from '@mui/material';
+import { AppBar, Box, Container } from '@mui/material';
 
+import Header from './components/Header';
 import HomeView from './views/HomeView';
 
+import 'normalize.css';
 import './App.css';
 
 function App() {
 	return (
-		<Box sx={{ flexGrow: 1 }}>
+		<Box sx={{ backgroundColor: (theme) => theme.palette.background.paper }}>
 			<AppBar position="static">
 				<Header />
 			</AppBar>
-			<Router>
-				<div className="container">
+			<Container>
+				<Router>
 					<Routes>
 						<Route exact path={`/:username/`} element={<HomeView />}></Route>
 					</Routes>
-				</div>
-			</Router>
+				</Router>
+			</Container>
 		</Box>
 	);
 }

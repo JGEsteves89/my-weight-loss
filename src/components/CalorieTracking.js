@@ -1,17 +1,16 @@
 import dayjs from 'dayjs';
 
-import { IconButton, Box, TextField } from '@mui/material';
+import { Typography, Box, TextField, Card, CardHeader, CardContent, CardActions, Button } from '@mui/material';
 import { DateCalendar } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import React, { useState } from 'react';
-import AddIcon from '@mui/icons-material/Add';
 
 import Store from '../store/Store';
 
 import CaloriesGraph from './CaloriesGraph';
-import ModalWindow from './ModalWindow';
 import SetTargetsForm from './SetTargetForm';
+import GraphedCard from './GraphedCard';
 
 function CalorieTracking() {
 	const [open, setOpen] = useState(false);
@@ -43,38 +42,31 @@ function CalorieTracking() {
 		setOpenSetTarget(false);
 	};
 
-	return (
-		<Box className="component" sx={{ flexGrow: 1 }}>
-			<div className="base-card">
-				<div className="base-card-row base-card-header">
-					<div className="justify" />
-					<div className="justify">
-						<h2 className="base-card-title">Calories</h2>
-					</div>
-					<div className="justify">
-						<IconButton variant="contained" color="primary" className="top-button" aria-label="Add Calories" onClick={handleOpen}>
-							<AddIcon />
-						</IconButton>
-					</div>
-				</div>
-				<div className="base-card-row">
-					<div className="justify base-card-value-unit calories-card-value-unit">
-						<h2 className="base-card-value">{getLastCalories()}</h2>
-						<h3 className="base-card-unit">of</h3>
-						<h3 className="base-card-value-s clicable" onClick={handleOpenSetTarget}>
-							{targetCalories}
-						</h3>
-						<h3 className="base-card-unit">cals</h3>
-					</div>
-				</div>
-				<div className="base-card-row base-card-graph">
-					<CaloriesGraph />
-				</div>
-			</div>
-			<ModalWindow open={open} onClose={handleClose}>
-				<Box style={{ width: '100%' }}>
-					<form onSubmit={handleSubmit}>
-						<label htmlFor="CaloriesInput">Enter your calories:</label>
+	const cardContent = () => {
+		return (
+			<>
+				<Box sx={{ display: 'flex', alignItems: 'baseline' }}>
+					<Typography variant="h2">{getLastCalories()}</Typography>
+					<Typography variant="subtitle"> cals</Typography>
+				</Box>
+				<CaloriesGraph />
+			</>
+		);
+	};
+
+	const cardActions = [
+		{ text: 'Set target', handleClick: handleOpenSetTarget, variant: 'outlined' },
+		{ text: 'Add calories intake', handleClick: handleOpen, variant: 'contained' },
+	];
+
+	const WindowAddCalories = () => {
+		return {
+			handleClose: handleClose,
+			open: open,
+			html: (
+				<Card style={{ width: '100%', justifyContent: 'center' }}>
+					<CardHeader title="Calories" subheader="Enter your calories: " />
+					<CardContent>
 						<LocalizationProvider dateAdapter={AdapterDayjs}>
 							<DateCalendar value={caloriesDate} disableFuture onChange={(newValue) => setCaloriesDate(newValue)} />
 						</LocalizationProvider>
@@ -89,15 +81,36 @@ function CalorieTracking() {
 								setCalories(e.target.value);
 							}}
 							required
+							fullWidth
 						/>
-						<button type="submit">Track Calories</button>
-					</form>
-				</Box>
-			</ModalWindow>
-			<ModalWindow open={openSetTarget} onClose={handleCloseSetTarget}>
-				<SetTargetsForm onSubmitEnd={() => handleCloseSetTarget()} />
-			</ModalWindow>
-		</Box>
+					</CardContent>
+					<CardActions sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '1rem' }}>
+						<Button onClick={handleClose}>Cancel</Button>
+						<Button onClick={handleSubmit} variant="contained" color="primary">
+							Submit
+						</Button>
+					</CardActions>
+				</Card>
+			),
+		};
+	};
+
+	const WindowSetTarget = () => {
+		return {
+			handleClose: handleCloseSetTarget,
+			open: openSetTarget,
+			html: <SetTargetsForm onSubmitEnd={() => handleCloseSetTarget()} />,
+		};
+	};
+
+	return (
+		<GraphedCard
+			cardTitle="Calories"
+			cardSubtitle={'Target: ' + targetCalories}
+			cardContent={cardContent()}
+			cardActions={cardActions}
+			cardModalWindows={[WindowAddCalories(), WindowSetTarget()]}
+		/>
 	);
 }
 

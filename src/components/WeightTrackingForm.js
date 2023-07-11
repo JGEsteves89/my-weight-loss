@@ -1,19 +1,20 @@
 import dayjs from 'dayjs';
 
-import { IconButton, Box, LinearProgress, TextField } from '@mui/material';
+import { Typography, Box, TextField, Card, CardHeader, CardContent, CardActions, Button, LinearProgress } from '@mui/material';
 import { DateCalendar } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import React, { useState } from 'react';
-import AddIcon from '@mui/icons-material/Add';
 
 import Store from '../store/Store';
 
 import WeightGraph from './WeightGraph';
-import ModalWindow from './ModalWindow';
+import SetTargetsForm from './SetTargetForm';
+import GraphedCard from './GraphedCard';
 
 function WeightTrackingForm() {
 	const [open, setOpen] = useState(false);
+	const [openSetTarget, setOpenSetTarget] = useState(false);
 	const { getLastWeight, getMaxWeight, getFirstWeightDate, addWeightEntry, targetWeight, getProgress } = Store.useWeightStore();
 
 	const [weight, setWeight] = useState(getLastWeight() | 0);
@@ -33,51 +34,57 @@ function WeightTrackingForm() {
 		handleClose();
 	};
 
-	return (
-		<Box className="component" sx={{ flexGrow: 1 }}>
-			<div className="base-card">
-				<div className="base-card-row base-card-header">
-					<div className="justify" />
-					<div className="justify">
-						<h2 className="base-card-title">Weight</h2>
-					</div>
-					<div className="justify">
-						<IconButton variant="contained" color="primary" className="top-button" aria-label="Add Weight" onClick={handleOpen}>
-							<AddIcon />
-						</IconButton>
-					</div>
-				</div>
-				<div className="base-card-row">
-					<div className="justify base-card-at-date">
-						<div className="justify base-card-value-unit">
-							<h2 className="base-card-value-s">{getMaxWeight()}</h2>
-							<h3 className="base-card-unit-s">kg</h3>
-						</div>
-						<div className="base-card-date">{getFirstWeightDate()}</div>
-					</div>
-					<div className="justify base-card-value-unit">
-						<h2 className="base-card-value">{getLastWeight()}</h2>
-						<h3 className="base-card-unit">kg</h3>
-					</div>
-					<div className="justify base-card-at-date">
-						<div className="justify base-card-value-unit">
-							<h2 className="base-card-value-s">{targetWeight}</h2>
-							<h3 className="base-card-unit-s">kg</h3>
-						</div>
-						<div className="base-card-date">{getFirstWeightDate()}</div>
-					</div>
-				</div>
-				<div className="base-card-row">
-					<LinearProgress className="progress-bar" variant="determinate" value={getProgress()} />
-				</div>
-				<div className="base-card-row base-card-graph">
-					<WeightGraph />
-				</div>
-			</div>
-			<ModalWindow open={open} onClose={handleClose}>
-				<Box style={{ width: '100%' }}>
-					<form onSubmit={handleSubmit}>
-						<label htmlFor="weightInput">Enter your weight:</label>
+	const handleOpenSetTarget = () => {
+		setOpenSetTarget(true);
+	};
+
+	const handleCloseSetTarget = () => {
+		setOpenSetTarget(false);
+	};
+
+	const cardContent = () => {
+		const flexBaseline = { display: 'flex', alignItems: 'baseline' };
+		return (
+			<>
+				<Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+					<Box>
+						<Box sx={flexBaseline}>
+							<Typography variant="h4">{getMaxWeight()}</Typography>
+							<Typography variant="subtitle"> kg</Typography>
+						</Box>
+						<Typography variant="subtitle2">{getFirstWeightDate()}</Typography>
+					</Box>
+					<Box sx={flexBaseline}>
+						<Typography variant="h2">{getLastWeight()}</Typography>
+						<Typography variant="subtitle"> kg</Typography>
+					</Box>
+					<Box>
+						<Box sx={flexBaseline}>
+							<Typography variant="h4">{targetWeight}</Typography>
+							<Typography variant="subtitle"> kg</Typography>
+						</Box>
+						<Typography variant="subtitle2">{getFirstWeightDate()}</Typography>
+					</Box>
+				</Box>
+				<LinearProgress className="progress-bar" variant="determinate" value={getProgress()} />
+				<WeightGraph />
+			</>
+		);
+	};
+
+	const cardActions = [
+		{ text: 'Set target', handleClick: handleOpenSetTarget, variant: 'outlined' },
+		{ text: 'Add weight measure', handleClick: handleOpen, variant: 'contained' },
+	];
+
+	const WindowAddWeight = () => {
+		return {
+			handleClose: handleClose,
+			open: open,
+			html: (
+				<Card style={{ width: '100%', justifyContent: 'center' }}>
+					<CardHeader title="Weight" subheader="Enter your weight: " />
+					<CardContent>
 						<LocalizationProvider dateAdapter={AdapterDayjs}>
 							<DateCalendar value={weightDate} disableFuture onChange={(newValue) => setWeightDate(newValue)} />
 						</LocalizationProvider>
@@ -85,19 +92,43 @@ function WeightTrackingForm() {
 							variant="standard"
 							className="base-text-field"
 							id="weightInput"
-							label="Enter weight in kilograms"
+							label="Enter weight of the day"
 							type="number"
 							value={weight}
 							onChange={(e) => {
 								setWeight(e.target.value);
 							}}
 							required
+							fullWidth
 						/>
-						<button type="submit">Track Weight</button>
-					</form>
-				</Box>
-			</ModalWindow>
-		</Box>
+					</CardContent>
+					<CardActions sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '1rem' }}>
+						<Button onClick={handleClose}>Cancel</Button>
+						<Button onClick={handleSubmit} variant="contained" color="primary">
+							Submit
+						</Button>
+					</CardActions>
+				</Card>
+			),
+		};
+	};
+
+	const WindowSetTarget = () => {
+		return {
+			handleClose: handleCloseSetTarget,
+			open: openSetTarget,
+			html: <SetTargetsForm onSubmitEnd={() => handleCloseSetTarget()} />,
+		};
+	};
+
+	return (
+		<GraphedCard
+			cardTitle="Weight"
+			cardSubtitle={null}
+			cardContent={cardContent()}
+			cardActions={cardActions}
+			cardModalWindows={[WindowAddWeight(), WindowSetTarget()]}
+		/>
 	);
 }
 
