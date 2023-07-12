@@ -8,14 +8,10 @@ import CalorieTracking from '../components/CalorieTracking';
 import ExerciseTracking from '../components/ExerciseTracking';
 import GoalSettingForm from '../components/GoalSettingForm';
 import WeightTrackingForm from '../components/WeightTrackingForm';
+import DayCalendarView from '../components/DayCalendarView';
 
 function HomeView() {
-	const cards = [
-		{ id: 1, html: <WeightTrackingForm /> },
-		{ id: 2, html: <CalorieTracking /> },
-		{ id: 3, html: <ExerciseTracking /> },
-		{ id: 4, html: <GoalSettingForm /> },
-	];
+	const cards = [<DayCalendarView />, <WeightTrackingForm />, <CalorieTracking />, <ExerciseTracking />, <GoalSettingForm />];
 
 	const { ready, user, setUser } = Store.useUserDataStore();
 	const { username } = useParams();
@@ -36,9 +32,9 @@ function HomeView() {
 
 	return (
 		<Grid container spacing={2}>
-			{cards.map((card) => (
-				<Grid item xs={12} sm={6} key={card.id} sx={{ marginTop: '1rem' }}>
-					<Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>{card.html}</Box>
+			{cards.map((card, i) => (
+				<Grid item xs={12} sm={6} key={i} sx={{ marginTop: '1rem' }}>
+					<Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>{card}</Box>
 				</Grid>
 			))}
 		</Grid>

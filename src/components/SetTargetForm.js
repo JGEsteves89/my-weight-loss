@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Typography, Box, TextField, Card, CardHeader, CardContent, CardActions, Button } from '@mui/material';
+import { Box, TextField, Card, CardHeader, CardContent, CardActions, Button } from '@mui/material';
 import { green, blue } from '@mui/material/colors';
 import Store from '../store/Store';
 
-function SetTargetsForm({ onSubmitEnd }) {
+function SetTargetsForm({ onClose }) {
 	const { targetWeight, setTargetWeight, getMilestones, getLastWeight } = Store.useWeightStore();
 	const { targetExercise, setTargetExercise } = Store.useExerciseStore();
 	const { targetCalories, setTargetCalories } = Store.useCaloriesStore();
@@ -30,8 +30,8 @@ function SetTargetsForm({ onSubmitEnd }) {
 			}
 		}
 		if (changeMilestones) setMilestonesGifts(localMilestoneGifts);
-		if (onSubmitEnd) {
-			onSubmitEnd();
+		if (onClose) {
+			onClose();
 		}
 	};
 
@@ -122,7 +122,7 @@ function SetTargetsForm({ onSubmitEnd }) {
 				))}
 			</CardContent>
 			<CardActions sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '1rem' }}>
-				<Button onClick={() => onSubmitEnd && onSubmitEnd()}>Cancel</Button>
+				<Button onClick={() => onClose && onClose()}>Cancel</Button>
 				<Button onClick={handleFormSubmit} variant="contained" color="primary">
 					Submit
 				</Button>

@@ -1,7 +1,21 @@
-import { Card, CardHeader, CardContent, CardActions, Button } from '@mui/material';
-import React from 'react';
+import { Card, CardHeader, CardContent, CardActions, Button, Box } from '@mui/material';
+import React, { useState } from 'react';
 
-import ModalWindow from './ModalWindow';
+function DialogHandles() {
+	const [isDialogVisible, setIsDialogVisible] = useState(false);
+	const handleOpen = () => {
+		setIsDialogVisible(true);
+	};
+
+	const handleClose = () => {
+		setIsDialogVisible(false);
+	};
+	return {
+		isDialogVisible,
+		handleOpen,
+		handleClose,
+	};
+}
 
 function GraphedCard({ cardTitle, cardSubtitle, cardContent, cardActions, cardModalWindows }) {
 	return (
@@ -9,21 +23,21 @@ function GraphedCard({ cardTitle, cardSubtitle, cardContent, cardActions, cardMo
 			<CardHeader title={cardTitle} subheader={cardSubtitle} />
 			<CardContent sx={{ height: '100%' }}>{cardContent}</CardContent>
 			<CardActions sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-				{cardActions.map((cardAction, i) => {
-					return (
-						<Button variant={cardAction.variant} color="primary" onClick={cardAction.handleClick} key={i}>
-							{cardAction.text}
-						</Button>
-					);
-				})}
+				{cardActions &&
+					cardActions.map((cardAction, i) => {
+						const { isDialogVisible, handleOpen, handleClose } = DialogHandles();
+
+						return (
+							<Box key={i}>
+								<Button variant={cardAction.variant} color="primary" onClick={handleOpen}>
+									{cardAction.text}
+								</Button>
+								{!!cardAction.modelWindow &&
+									React.cloneElement(cardAction.modelWindow, { open: isDialogVisible, onClose: handleClose })}
+							</Box>
+						);
+					})}
 			</CardActions>
-			{cardModalWindows.map((modalWindowHtml, i) => {
-				return (
-					<ModalWindow open={modalWindowHtml.open} onClose={modalWindowHtml.handleClose} key={i}>
-						{modalWindowHtml.html}
-					</ModalWindow>
-				);
-			})}
 		</Card>
 	);
 }
