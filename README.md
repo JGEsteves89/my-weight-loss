@@ -1,70 +1,19 @@
-# Getting Started with Create React App
+# App Name: My Weight Loss
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The "My Weight Loss" app is designed to help you track your weight loss progress and achieve your desired weight goal. It provides incremental steps and features to support your weight loss journey. Here's what the app offers:
 
-## Available Scripts
+-   Goal Setting: Start by setting your target weight. Specify the amount of weight you want to lose, and the app will guide you towards achieving that goal.
 
-In the project directory, you can run:
+-   Calorie Tracking: The app calculates the target calorie intake for each week/day based on your weight loss goals. It also helps you monitor your food intake by analyzing your daily calorie consumption.
 
-### `npm start`
+-   Exercise Tracking: Keep track of your exercise and physical activity to ensure you're burning calories effectively. The app estimates the calories expended during exercises and helps you maintain a healthy exercise routine.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+-   Weight Session: Log your weight periodically to monitor your progress accurately. The app allows you to record your weight at least once a week, providing you with valuable data to track your success.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+-   Analysis and Visualization: Gain insights into your weight loss journey through daily intake analysis and an overall weight graph. The app provides estimations and tracks Key Performance Indicators (KPIs) such as total Healthy Index and current weight loss per week.
 
-### `npm test`
+-   Target Adjustment: If needed, you can modify your weight loss target at any time within the app. This flexibility ensures that the app aligns with your changing goals and requirements.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+-   Milestones and Rewards: Throughout your weight loss journey, the app sets three main milestones. When you reach each milestone and maintain the weight for one week, you'll receive a self-chosen gift as a reward.
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The "My Weight Loss" app empowers you to track your progress, stay motivated, and make informed decisions to achieve your weight loss goals effectively.

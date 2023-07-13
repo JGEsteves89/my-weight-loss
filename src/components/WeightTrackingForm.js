@@ -9,7 +9,7 @@ import GraphedCard from './GraphedCard';
 import WeightAddWindow from './WeightAddWindow';
 
 function WeightTrackingForm() {
-	const { getLastWeight, getMaxWeight, getFirstWeightDate, targetWeight, getProgress } = Store.useWeightStore();
+	const { getLastWeight, getMaxWeight, getFirstWeightDate, targetWeight, getProgress, getEstimatedDay } = Store.useWeightStore();
 
 	const cardContent = () => {
 		const flexBaseline = { display: 'flex', alignItems: 'baseline' };
@@ -32,7 +32,7 @@ function WeightTrackingForm() {
 							<Typography variant="h4">{targetWeight}</Typography>
 							<Typography variant="subtitle"> kg</Typography>
 						</Box>
-						<Typography variant="subtitle2">{getFirstWeightDate()}</Typography>
+						<Typography variant="subtitle2">{getEstimatedDay()}</Typography>
 					</Box>
 				</Box>
 				<LinearProgress variant="determinate" value={getProgress()} />

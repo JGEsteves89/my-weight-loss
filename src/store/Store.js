@@ -140,7 +140,19 @@ const useWeightStore = create((set, get) => ({
 		const targetWeight = get().targetWeight;
 		return maxWeight ? (((maxWeight - lastWeight) / (maxWeight - targetWeight)) * 100) | 0 : null;
 	},
-	getCurrentDate: () => dayjs().format('YYYY/MM/DD'),
+	getEstimatedDay: () => {
+		const maxWeight = get().getMaxWeight();
+		const lastWeight = get().getLastWeight();
+
+		const firstDay = get().getFirstWeightDate();
+		const totalDays = dayjs().diff(dayjs(firstDay), 'day');
+		const avgWeightLossDay = (maxWeight - lastWeight) / totalDays;
+
+		const targetWeight = get().targetWeight;
+		const stillToGo = lastWeight - targetWeight;
+		const estimatedDays = stillToGo / avgWeightLossDay;
+		return dayjs().add(estimatedDays, 'day').format('YYYY/MM/DD');
+	},
 }));
 
 const useCaloriesStore = create((set, get) => ({

@@ -48,6 +48,15 @@ const themeOptions = {
 			fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
 		},
 	},
+	components: {
+		MuiCardHeader: {
+			styleOverrides: {
+				root: {
+					color: '#d2a01d',
+				},
+			},
+		},
+	},
 };
 const theme = createTheme(themeOptions);
 export default theme;

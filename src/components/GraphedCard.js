@@ -17,7 +17,7 @@ function DialogHandles() {
 	};
 }
 
-function GraphedCard({ cardTitle, cardSubtitle, cardContent, cardActions, cardModalWindows }) {
+function GraphedCard({ cardTitle, cardSubtitle, cardContent, cardActions }) {
 	return (
 		<Card sx={{ flexGrow: 1, overflow: 'visible' }}>
 			<CardHeader title={cardTitle} subheader={cardSubtitle} />
