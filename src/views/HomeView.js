@@ -9,9 +9,10 @@ import ExerciseTracking from '../components/ExerciseTracking';
 import GoalSettingForm from '../components/GoalSettingForm';
 import WeightTrackingForm from '../components/WeightTrackingForm';
 import DayCalendarView from '../components/DayCalendarView';
+import GoalsTracking from '../components/GoalsTracking';
 
 function HomeView() {
-	const cards = [<DayCalendarView />, <WeightTrackingForm />, <CalorieTracking />, <ExerciseTracking />, <GoalSettingForm />];
+	const cards = [<GoalsTracking />, <DayCalendarView />, <WeightTrackingForm />, <CalorieTracking />, <ExerciseTracking />, <GoalSettingForm />];
 
 	const { ready, user, setUser } = Store.useUserDataStore();
 	const { username } = useParams();

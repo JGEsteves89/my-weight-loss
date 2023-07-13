@@ -35,13 +35,13 @@ function WeightTrackingForm() {
 						<Typography variant="subtitle2">{getFirstWeightDate()}</Typography>
 					</Box>
 				</Box>
-				<LinearProgress className="progress-bar" variant="determinate" value={getProgress()} />
+				<LinearProgress variant="determinate" value={getProgress()} />
 				<WeightGraph />
 			</>
 		);
 	};
 	const cardActions = [
-		{ text: 'Set target', variant: 'outlined', modelWindow: <SetTargetWindow /> },
+		{ text: 'Set targets', variant: 'outlined', modelWindow: <SetTargetWindow /> },
 		{
 			text: 'Add weight measure',
 			variant: 'contained',

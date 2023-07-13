@@ -77,8 +77,9 @@ The "My Weight Loss" app empowers you to track your progress, stay motivated, an
 -   [x] Fix color and theme
 -   [x] Create a calendar view of good days and bad days
 -   [x] Create a selection of user
+-   [x] Fix bug where that wheight graph does not come in the right order
+-   [x] Create a specific view for rewards with a progress bar and option to claim them
 -   [ ] Fix annoying bug where loading page gets stuck after code update
--   [ ] Create a specific view for rewards with a progress bar and option to claim them
 -   [ ] Create a calendar view of good weeks and bad weeks
 -   [ ] Calculate the expected time of arrival of target
 -   [ ] Calculate the expected time of goal/gift

@@ -12,7 +12,12 @@ function WeightGraph() {
 	const { weights, getMaxWeight, getMilestones } = Store.useWeightStore();
 	const maxWeight = getMaxWeight();
 	const { milestone1, milestone2, milestone3 } = getMilestones();
-	const sortedWeight = weights.sort((a, b) => dayjs(a.date).diff(dayjs(b.date)));
+	let sortedWeight = weights.sort((a, b) => dayjs(a.date).diff(dayjs(b.date)));
+	const firstDate = sortedWeight.length > 0 ? sortedWeight[0].date : dayjs().format('YYYY/MM/DD');
+	sortedWeight = sortedWeight.map((w) => {
+		return { weight: w.weight, date: dayjs(w.date).diff(dayjs(firstDate), 'day') };
+	});
+
 	return (
 		<Box sx={{ height: '32.5vh' }}>
 			<ResponsiveContainer width="100%" height="100%">
@@ -22,7 +27,7 @@ function WeightGraph() {
 						tickLine={false}
 						axisLine={false}
 						padding="no-gap"
-						tickFormatter={(value) => dayjs(value).format('MM/DD')}
+						tickFormatter={(value) => dayjs(firstDate).add(value, 'day').format('MM/DD')}
 						tick={{ fontFamily: 'Arial', fontSize: '0.8rem', fill: theme.palette.info.dark, dy: 10 }}
 					/>
 					<YAxis hide={true} type="number" domain={['dataMin - 1', 'dataMax + 1']} />

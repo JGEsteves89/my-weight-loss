@@ -12,7 +12,7 @@ function ExerciseTracking() {
 	const { targetExercise, getLastExercise } = Store.useExerciseStore();
 
 	const cardActions = [
-		{ text: 'Set target', variant: 'outlined', modelWindow: <SetTargetWindow /> },
+		{ text: 'Set targets', variant: 'outlined', modelWindow: <SetTargetWindow /> },
 		{
 			text: 'Add exercise intake',
 			variant: 'contained',

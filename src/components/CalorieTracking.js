@@ -23,7 +23,7 @@ function CalorieTracking() {
 		);
 	};
 	const cardActions = [
-		{ text: 'Set target', variant: 'outlined', modelWindow: <SetTargetWindow /> },
+		{ text: 'Set targets', variant: 'outlined', modelWindow: <SetTargetWindow /> },
 		{
 			text: 'Add calories intake',
 			variant: 'contained',

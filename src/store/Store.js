@@ -14,15 +14,16 @@ const auth = getAuth(app);
 let bearer = authenticateWithPassword();
 
 function push() {
-	if (DEBUG) console.log('Trying to push for', Store.useUserDataStore.getState().user);
+	const user = Store.useUserDataStore.getState().user;
+	if (DEBUG) console.log('Trying to push for', user);
 	if (Store.useUserDataStore.getState().user === '') return;
-	if (DEBUG) console.log('Pushing for', Store.useUserDataStore.getState().user);
+	if (DEBUG) console.log('Pushing for', user);
 	const { weights, targetWeight } = Store.useWeightStore.getState();
 	const { allCalories, targetCalories } = Store.useCaloriesStore.getState();
 	const { allExercise, targetExercise } = Store.useExerciseStore.getState();
 	const { milestonesGifts } = Store.useMilestonesStore.getState();
 	if (DEBUG)
-		console.log('Pushing for', Store.useUserDataStore.getState().user, 'on', Store.useUserDataStore.getState().user + '/data', 'with', {
+		console.log('Pushing for', user, 'on', user + '/data', 'with', {
 			weights,
 			targetWeight,
 			allCalories,
@@ -32,7 +33,7 @@ function push() {
 			milestonesGifts,
 		});
 	setDatabase(
-		ref(getDatabase(), Store.useUserDataStore.getState().user + '/data'),
+		ref(getDatabase(), user + '/data'),
 		{ weights, targetWeight, allCalories, targetCalories, allExercise, targetExercise, milestonesGifts },
 		{
 			bearer,
