@@ -27,6 +27,7 @@ function HomeView() {
 	const { username } = useParams();
 
 	useEffect(() => {
+		console.log('User', username);
 		if (username !== user) {
 			setUser(username);
 		}

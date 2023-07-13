@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { AppBar, Box, Container } from '@mui/material';
 
 import Header from './components/Header';
@@ -17,7 +17,7 @@ function App() {
 			<Container>
 				<Router>
 					<Routes>
-						<Route exact path={`/:username/`} element={<HomeView />}></Route>
+						<Route exact path={`/#/:username/`} element={<HomeView />}></Route>
 					</Routes>
 				</Router>
 			</Container>
