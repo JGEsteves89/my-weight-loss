@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/my-weight-loss/static/css/main.1b3f5c21.css",
-    "main.js": "/my-weight-loss/static/js/main.20abfd22.js",
+    "main.js": "/my-weight-loss/static/js/main.c0cf870f.js",
     "static/js/787.70849556.chunk.js": "/my-weight-loss/static/js/787.70849556.chunk.js",
     "index.html": "/my-weight-loss/index.html",
     "main.1b3f5c21.css.map": "/my-weight-loss/static/css/main.1b3f5c21.css.map",
-    "main.20abfd22.js.map": "/my-weight-loss/static/js/main.20abfd22.js.map",
+    "main.c0cf870f.js.map": "/my-weight-loss/static/js/main.c0cf870f.js.map",
     "787.70849556.chunk.js.map": "/my-weight-loss/static/js/787.70849556.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.1b3f5c21.css",
-    "static/js/main.20abfd22.js"
+    "static/js/main.c0cf870f.js"
   ]
 }
