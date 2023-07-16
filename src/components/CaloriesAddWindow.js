@@ -18,7 +18,6 @@ function CaloriesAddWindow({ open, onClose, day = dayjs().format('YYYY/MM/DD') }
 
 	useEffect(() => {
 		const caloriesOfDay = allCalories.find((c) => c.date === day);
-		console.log(dayjs(day).format('YYYY/MM/DD'), caloriesOfDay);
 		setCaloriesDate(dayjs(day));
 		setCalories(caloriesOfDay ? caloriesOfDay.calories : targetCalories);
 	}, [day, setCaloriesDate, setCalories, allCalories, targetCalories]);
