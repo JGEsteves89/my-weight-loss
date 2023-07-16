@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import { Grid, Box, CircularProgress } from '@mui/material';
-import { useParams } from 'react-router-dom';
+import { Grid, Box, CircularProgress, Typography } from '@mui/material';
 
 import Store from '../store/Store';
 
@@ -12,7 +11,7 @@ import DayCalendarView from '../components/DayCalendarView';
 import GoalsTracking from '../components/GoalsTracking';
 import WeightVelocity from '../components/WeightVelocity';
 
-function HomeView() {
+function HomeView({ username }) {
 	const cards = [
 		<WeightVelocity />,
 		<DayCalendarView />,
@@ -24,14 +23,22 @@ function HomeView() {
 	];
 
 	const { ready, user, setUser } = Store.useUserDataStore();
-	const { username } = useParams();
 
 	useEffect(() => {
-		console.log('User', username);
 		if (username !== user) {
 			setUser(username);
 		}
 	}, [user, username, setUser]);
+
+	if (username === '') {
+		return (
+			<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+				<Typography variant="h5" color="secondary">
+					{'Please visit ' + window.location.origin + '/my-weight-loss?user=[yourname]'}
+				</Typography>
+			</div>
+		);
+	}
 
 	if (!ready) {
 		return (
@@ -42,13 +49,20 @@ function HomeView() {
 	}
 
 	return (
-		<Grid container spacing={2}>
-			{cards.map((card, i) => (
-				<Grid item xs={12} sm={6} key={i} sx={{ marginTop: '1rem' }}>
-					<Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>{card}</Box>
-				</Grid>
-			))}
-		</Grid>
+		<>
+			<Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+				<Typography variant="h5" color="secondary">
+					{username}
+				</Typography>
+			</Box>
+			<Grid container spacing={2}>
+				{cards.map((card, i) => (
+					<Grid item xs={12} sm={6} key={i} sx={{ marginTop: '1rem' }}>
+						<Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>{card}</Box>
+					</Grid>
+				))}
+			</Grid>
+		</>
 	);
 }
 

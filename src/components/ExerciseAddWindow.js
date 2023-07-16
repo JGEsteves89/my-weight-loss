@@ -4,16 +4,22 @@ import { TextField, Card, CardHeader, CardContent, CardActions, Button } from '@
 import { DateCalendar } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Store from '../store/Store';
 
 import ModalWindow from './ModalWindow';
 
 function ExerciseAddWindow({ open, onClose, day = dayjs().format('YYYY/MM/DD') }) {
-	const { addExerciseEntry, targetExercise } = Store.useExerciseStore();
-	const [exercise, setExercise] = useState(targetExercise);
+	const { allExercise, addExerciseEntry, targetExercise } = Store.useExerciseStore();
+	const [exercise, setExercise] = useState(allExercise[day] ? allExercise[day].exercise : targetExercise);
 	const [exerciseDate, setExerciseDate] = useState(dayjs(day));
+
+	useEffect(() => {
+		const exerciseOfDay = allExercise.find((c) => c.date === day);
+		setExerciseDate(dayjs(day));
+		setExercise(exerciseOfDay ? exerciseOfDay.exercise : targetExercise);
+	}, [day, setExerciseDate, setExercise, allExercise, targetExercise]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();

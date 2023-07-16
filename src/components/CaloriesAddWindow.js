@@ -4,17 +4,24 @@ import { TextField, Card, CardHeader, CardContent, CardActions, Button } from '@
 import { DateCalendar } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Store from '../store/Store';
 
 import ModalWindow from './ModalWindow';
 
 function CaloriesAddWindow({ open, onClose, day = dayjs().format('YYYY/MM/DD') }) {
-	const { addCaloriesEntry, targetCalories } = Store.useCaloriesStore();
+	const { allCalories, addCaloriesEntry, targetCalories } = Store.useCaloriesStore();
 
-	const [calories, setCalories] = useState(targetCalories);
+	const [calories, setCalories] = useState(allCalories[day] ? allCalories[day].calories : targetCalories);
 	const [caloriesDate, setCaloriesDate] = useState(dayjs(day));
+
+	useEffect(() => {
+		const caloriesOfDay = allCalories.find((c) => c.date === day);
+		console.log(dayjs(day).format('YYYY/MM/DD'), caloriesOfDay);
+		setCaloriesDate(dayjs(day));
+		setCalories(caloriesOfDay ? caloriesOfDay.calories : targetCalories);
+	}, [day, setCaloriesDate, setCalories, allCalories, targetCalories]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();

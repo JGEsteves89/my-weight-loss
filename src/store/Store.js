@@ -43,7 +43,7 @@ function push() {
 
 function pull(data) {
 	if (DEBUG) console.log('Pulling');
-	let { weights, targetWeight, allCalories, targetCalories, allExercise, targetExercise, milestonesGifts } = data;
+	let { weights, targetWeight, allCalories, targetCalories, allExercise, targetExercise, milestonesGifts } = data ?? {};
 
 	if (!weights) weights = [];
 	if (!allCalories) allCalories = [];

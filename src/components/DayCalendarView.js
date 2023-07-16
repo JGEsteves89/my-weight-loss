@@ -9,14 +9,12 @@ import React, { useState, useEffect } from 'react';
 
 import { useTheme } from '@mui/material/styles';
 import Store from '../store/Store';
+import { lerpHexColor } from '../utils/Color';
 
 import GraphedCard from './GraphedCard';
 import CaloriesAddWindow from './CaloriesAddWindow';
 import ExerciseAddWindow from './ExerciseAddWindow';
 import WeightAddWindow from './WeightAddWindow';
-
-const hex = (p) => (Math.max(0, Math.min((p * 255) / 100, 255)) | 0).toString(16).padStart(2, '0');
-const withAlpha = (c, p) => c + hex(p);
 
 function DialogHandles() {
 	const [isDialogVisible, setIsDialogVisible] = useState(false);
@@ -50,7 +48,6 @@ function DayCalendarView() {
 				data[day] = { calories: null, exercise: null, weight: null };
 			}
 		};
-
 		for (const calories of allCalories) {
 			verify(newAllDaysData, calories.date);
 			newAllDaysData[calories.date].calories = calories.calories;
@@ -72,46 +69,74 @@ function DayCalendarView() {
 			}
 			lastWeight = weight.weight;
 		}
-		newAllDaysData.maxCalories = Math.max(...allCalories.map((c) => c.calories));
-		newAllDaysData.minCalories = Math.min(...allCalories.map((c) => c.calories));
-		newAllDaysData.avgCalories = allCalories.map((c) => c.calories).reduce((p, c) => (p += c)) / allCalories.length;
-		newAllDaysData.maxExercise = Math.max(...allExercise.map((c) => c.exercise));
-		newAllDaysData.minExercise = Math.min(...allExercise.map((c) => c.exercise));
-		newAllDaysData.avgExercise = allExercise.map((c) => c.exercise).reduce((p, c) => (p += c)) / allExercise.length;
-		newAllDaysData.maxWeightLoss = Math.max(...weightLossList);
-		newAllDaysData.minWeightLoss = Math.min(...weightLossList);
-		newAllDaysData.avgWeight = weightLossList.reduce((p, c) => (p += c)) / weightLossList.length;
+		newAllDaysData.maxCalories = allCalories.length === 0 ? 0 : Math.max(...allCalories.map((c) => c.calories).filter((c) => c !== 0));
+		newAllDaysData.minCalories = allCalories.length === 0 ? 0 : Math.min(...allCalories.map((c) => c.calories).filter((c) => c !== 0));
+		newAllDaysData.avgCalories =
+			allCalories.length === 0 ? 0 : allCalories.map((c) => c.calories).reduce((p, c) => (p += c)) / allCalories.length;
+		newAllDaysData.maxExercise = allExercise.length === 0 ? 0 : Math.max(...allExercise.map((c) => c.exercise).filter((c) => c !== 0));
+		newAllDaysData.minExercise = allExercise.length === 0 ? 0 : Math.min(...allExercise.map((c) => c.exercise).filter((c) => c !== 0));
+		newAllDaysData.avgExercise =
+			allExercise.length === 0 ? 0 : allExercise.map((c) => c.exercise).reduce((p, c) => (p += c)) / allExercise.length;
+		newAllDaysData.maxWeightLoss = weightLossList.length === 0 ? 0 : Math.max(...weightLossList);
+		newAllDaysData.minWeightLoss = weightLossList.length === 0 ? 0 : Math.min(...weightLossList);
+		newAllDaysData.avgWeight = weightLossList.length === 0 ? 0 : weightLossList.reduce((p, c) => (p += c)) / weightLossList.length;
 
+		const ratio = (value, max, min) => {
+			if (!value) return null;
+			return (value - min) / (max - min);
+		};
+
+		const allIndexes = [];
+		for (const day in newAllDaysData) {
+			const { calories, exercise, weight } = newAllDaysData[day];
+			if (calories || exercise || weight) {
+				const calHow = ratio(newAllDaysData[day].calories, newAllDaysData.minCalories, newAllDaysData.maxCalories);
+				newAllDaysData[day].calHow = calHow;
+
+				const exeHow = ratio(newAllDaysData[day].exercise, newAllDaysData.maxExercise, newAllDaysData.minExercise);
+				newAllDaysData[day].exeHow = exeHow;
+
+				const weiHow = ratio(newAllDaysData[day].weight, newAllDaysData.minWeightLoss, newAllDaysData.maxWeightLoss);
+				newAllDaysData[day].weiHow = weiHow;
+
+				const average = (values) => {
+					let sum = 0;
+					let count = 0;
+					for (const value of values) {
+						if (value !== null) {
+							sum += value;
+							count++;
+						}
+					}
+					if (count === 0) {
+						return 0;
+					}
+					return sum / count;
+				};
+
+				// const avg = average([calHow, calAvg, exeHow, exeAvg, weiHow, weiAvg]);
+				const avg = average([calHow, exeHow, weiHow]);
+				newAllDaysData[day].healthIndex = avg;
+
+				allIndexes.push(avg);
+			}
+		}
+
+		newAllDaysData.maxIndex = allIndexes.length === 0 ? 0 : Math.max(...allIndexes);
+		newAllDaysData.minIndex = allIndexes.length === 0 ? 0 : Math.min(...allIndexes);
 		setAllDaysData(newAllDaysData);
 	}, [allCalories, allExercise, weights]);
 
 	const DaySlot = (props) => {
 		const day = props.day.format('YYYY/MM/DD');
 
-		const ratio = (value, max, min) => {
-			if (!value) return 0;
-			return (value - min) / (max - min);
-		};
-
 		let withColor = {};
 		if (allDaysData[day]) {
-			const calHow = ratio(allDaysData[day].calories, allDaysData.minCalories, allDaysData.maxCalories);
-			const calAvg = allDaysData[day].calories < allDaysData.avgCalories ? 1 : 0;
+			const colorIndex = (allDaysData[day].healthIndex - allDaysData.minIndex) / (allDaysData.maxIndex - allDaysData.minIndex);
+			const bgColor = lerpHexColor(theme.palette.error.main, theme.palette.success.main, colorIndex);
 
-			const exeHow = ratio(allDaysData[day].exercise, allDaysData.maxExercise, allDaysData.minExercise);
-			const exeAvg = allDaysData[day].exercise > allDaysData.avgExercise ? 1 : 0;
+			withColor.backgroundColor = bgColor;
 
-			const weiHow = ratio(allDaysData[day].weight, allDaysData.maxWeightLoss, allDaysData.minWeightLoss);
-			const weiAvg = allDaysData[day].weight < allDaysData.avgWeight ? 1 : 0;
-
-			const average = (calHow + calAvg + exeHow + exeAvg + weiHow + weiAvg) / 6;
-			if (average > 0.5) {
-				const ratio = (1 - average) / 0.5;
-				withColor.backgroundColor = withAlpha(theme.palette.success.main, 30 + ((100 - ratio * 100) | 0) / 2);
-			} else {
-				const ratio = average / 0.5;
-				withColor.backgroundColor = withAlpha(theme.palette.error.main, 30 + ((100 - ratio * 100) | 0) / 2);
-			}
 			if (props.selected) {
 				withColor['&.Mui-selected'] = {
 					backgroundColor: withColor.backgroundColor,
@@ -125,28 +150,44 @@ function DayCalendarView() {
 
 	const cardContent = () => {
 		const day = selectedDate.format('YYYY/MM/DD');
-
 		const dayValues = [
 			{
 				title: 'calories',
 				value: allDaysData[day] && allDaysData[day].calories ? allDaysData[day].calories : 'N/A',
+				color:
+					allDaysData[day] && allDaysData[day].calHow !== null
+						? allDaysData[day].calHow > 0.5
+							? theme.palette.success.main
+							: theme.palette.error.main
+						: theme.palette.primary.main,
 				unit: 'cals',
 				addWindow: <CaloriesAddWindow />,
 			},
 			{
 				title: 'exercise',
 				value: allDaysData[day] && allDaysData[day].exercise ? allDaysData[day].exercise : 'N/A',
+				color:
+					allDaysData[day] && allDaysData[day].exeHow !== null
+						? allDaysData[day].exeHow > 0.5
+							? theme.palette.success.main
+							: theme.palette.error.main
+						: theme.palette.primary.main,
 				unit: 'cals',
 				addWindow: <ExerciseAddWindow />,
 			},
 			{
 				title: 'weight',
 				value: allDaysData[day] && allDaysData[day].weight ? allDaysData[day].weight.toFixed(1) : 'N/A',
+				color:
+					allDaysData[day] && allDaysData[day].weiHow !== null
+						? allDaysData[day].weiHow > 0.5
+							? theme.palette.success.main
+							: theme.palette.error.main
+						: theme.palette.primary.main,
 				unit: 'kg',
 				addWindow: <WeightAddWindow />,
 			},
 		];
-
 		return (
 			<Box>
 				<LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -170,7 +211,7 @@ function DayCalendarView() {
 									sx={{
 										display: 'flex',
 										alignItems: 'baseline',
-										color: theme.palette.primary.main,
+										color: c.color,
 										cursor: 'pointer',
 										'&:hover': { textDecoration: 'underline' },
 									}}
@@ -179,7 +220,7 @@ function DayCalendarView() {
 									<Typography variant="caption">{c.unit}</Typography>
 								</Box>
 								<Typography variant="subtitle">{c.title}</Typography>
-								{!!c.addWindow && React.cloneElement(c.addWindow, { open: isDialogVisible, onClose: handleClose, day: day })}
+								{!c.addWindow ? <></> : React.cloneElement(c.addWindow, { open: isDialogVisible, onClose: handleClose, day: day })}
 							</Box>
 						);
 					})}

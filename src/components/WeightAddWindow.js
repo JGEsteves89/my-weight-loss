@@ -4,17 +4,23 @@ import { TextField, Card, CardHeader, CardContent, CardActions, Button } from '@
 import { DateCalendar } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Store from '../store/Store';
 
 import ModalWindow from './ModalWindow';
 
 function WeightAddWindow({ open, onClose, day = dayjs().format('YYYY/MM/DD') }) {
-	const { getLastWeight, addWeightEntry } = Store.useWeightStore();
+	const { weights, getLastWeight, addWeightEntry } = Store.useWeightStore();
 
-	const [weight, setWeight] = useState(getLastWeight() | 0);
+	const [weight, setWeight] = useState(weights[day] ? weights[day].weight : getLastWeight());
 	const [weightDate, setWeightDate] = useState(dayjs(day));
+
+	useEffect(() => {
+		const weightOfDay = weights.find((c) => c.date === day);
+		setWeightDate(dayjs(day));
+		setWeight(weightOfDay ? weightOfDay.weight : getLastWeight());
+	}, [day, setWeightDate, setWeight, weights, getLastWeight]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
