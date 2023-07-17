@@ -49,20 +49,13 @@ function HomeView({ username }) {
 	}
 
 	return (
-		<>
-			<Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-				<Typography variant="h5" color="secondary">
-					{username}
-				</Typography>
-			</Box>
-			<Grid container spacing={2}>
-				{cards.map((card, i) => (
-					<Grid item xs={12} sm={6} key={i} sx={{ marginTop: '1rem' }}>
-						<Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>{card}</Box>
-					</Grid>
-				))}
-			</Grid>
-		</>
+		<Grid container spacing={2}>
+			{cards.map((card, i) => (
+				<Grid item xs={12} sm={6} key={i} sx={{ marginTop: '1rem' }}>
+					<Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>{card}</Box>
+				</Grid>
+			))}
+		</Grid>
 	);
 }
 

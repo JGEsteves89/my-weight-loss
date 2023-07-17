@@ -40,19 +40,25 @@ function WeightVelocity() {
 	const daysUntilMilestone2 = Math.ceil((milestone2 - getLastWeight()) / total.avgPerDay);
 	const bmr = (88.362 + 13.397 * lastWeight + 4.799 * 182 - 5.677 * 34) * 1.2;
 	const { allCalories } = Store.useCaloriesStore();
-	const weekCalories = allCalories
-		.sort((a, b) => dayjs(a.date).diff(dayjs(b.date)))
-		.slice(-7)
-		.reduce((p, c) => (p += c.calories), 0);
+	const weekCalories =
+		allCalories
+			.sort((a, b) => dayjs(a.date).diff(dayjs(b.date)))
+			.slice(-7)
+			.reduce((p, c) => (p += c.calories), 0) / 7;
 
 	const { allExercise } = Store.useExerciseStore();
-	const weekExercise = allExercise
-		.sort((a, b) => dayjs(a.date).diff(dayjs(b.date)))
-		.slice(-7)
-		.reduce((p, c) => (p += c.exercise), 0);
+	const weekExercise =
+		allExercise
+			.sort((a, b) => dayjs(a.date).diff(dayjs(b.date)))
+			.slice(-7)
+			.reduce((p, c) => (p += c.exercise), 0) / 7;
 
-	const deficit = weekCalories - weekExercise - bmr * 7;
-	const expectedWeightLoss = deficit / 7700;
+	const kgToCal = 7700;
+	const deficit = weekCalories - weekExercise - bmr;
+	const expectedWeightLoss = (deficit / kgToCal) * 7;
+	const exeIntPercentage = [0.5, 0.5];
+	const defictFor1KgPerDay = exeIntPercentage.map((p) => (p * (1 * kgToCal)) / 7);
+	const defictFor2KgPerDay = exeIntPercentage.map((p) => (p * (2 * kgToCal)) / 7);
 
 	const cardContent = () => {
 		const flexBaseline = { display: 'flex', alignItems: 'baseline' };
@@ -85,11 +91,20 @@ function WeightVelocity() {
 				section: 'Calories Intake',
 				values: [
 					{ title: 'BMR:', value: bmr.toFixed(0), unit: 'cals' },
-					{ title: 'Week intake:', value: weekCalories.toFixed(0), unit: 'cals' },
-					{ title: 'Week exercise:', value: weekExercise.toFixed(0), unit: 'cals' },
-					{ title: 'Week deficit:', value: deficit.toFixed(0), unit: 'cals' },
+					{ title: 'Daily avg intake:', value: weekCalories.toFixed(0), unit: 'cals' },
+					{ title: 'Daily avg exercise:', value: weekExercise.toFixed(0), unit: 'cals' },
+					{ title: 'Daily avg deficit:', value: deficit.toFixed(0), unit: 'cals' },
 					{ title: 'Expected weight loss:', value: expectedWeightLoss.toFixed(2), unit: 'kg/week' },
 					{ title: 'Expected weight loss:', value: (expectedWeightLoss / 7).toFixed(2), unit: 'kg/day' },
+				],
+			},
+			{
+				section: 'Calories defict',
+				values: [
+					{ title: 'To lose 1kg (daily intake):', value: (bmr - defictFor1KgPerDay[0]).toFixed(0), unit: 'cals/day' },
+					{ title: 'To lose 1kg exercise:', value: defictFor1KgPerDay[0].toFixed(0), unit: 'cals/day' },
+					{ title: 'To lose 2kg (daily intake):', value: (bmr - defictFor2KgPerDay[0]).toFixed(0), unit: 'cals/day' },
+					{ title: 'To lose 2kg exercise:', value: defictFor2KgPerDay[0].toFixed(0), unit: 'cals/day' },
 				],
 			},
 		];
