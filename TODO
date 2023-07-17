@@ -40,13 +40,13 @@ The "My Weight Loss" app empowers you to track your progress, stay motivated, an
 
 ### Task: Calculate calorie targets and exercise goals
 
--   [ ] Build algorithms to calculate weekly calorie intake targets based on weight loss goals.
+-   [x] Build algorithms to calculate weekly calorie intake targets based on weight loss goals.
 -   [x] Implement exercise tracking and estimation of calories burned during exercises.
--   [ ] Develop logic for suggesting daily and weekly exercise goals for the user.
+-   [x] WONT DO: Develop logic for suggesting daily and weekly exercise goals for the user.
 
 ### Task: Integrate data analysis and visualization features
 
--   [ ] Implement data analysis algorithms to calculate KPIs such as Healthy Index and weekly weight loss.
+-   [x] Implement data analysis algorithms to calculate KPIs such as Healthy Index and weekly weight loss.
 -   [x] Create graphs and visualizations to display weight progress and daily calorie intake.
 -   [x] Ensure the accuracy and responsiveness of the data analysis and visualization components.
 
@@ -54,19 +54,19 @@ The "My Weight Loss" app empowers you to track your progress, stay motivated, an
 
 -   [x] Design a user interface for displaying milestones and rewards.
 -   [x] Develop logic to detect milestone achievements and trigger reward notifications.
--   [ ] Allow users to choose rewards and track their progress towards earning them.
+-   [x] Allow users to choose rewards and track their progress towards earning them.
 
 ### Task: Testing and bug fixing
 
--   [ ] Conduct unit tests to ensure the reliability of components and features.
--   [ ] Perform integration testing to verify the interactions between different app sections.
--   [ ] Identify and fix any bugs or issues reported during testing.
+-   [x] WONT DO: Conduct unit tests to ensure the reliability of components and features.
+-   [x] Perform integration testing to verify the interactions between different app sections.
+-   [x] Identify and fix any bugs or issues reported during testing.
 
 ### Task: Documentation and deployment
 
--   [ ] Document the app's functionality, setup instructions, and usage guidelines.
--   [ ] Prepare the app for deployment by optimizing code, assets, and configurations.
--   [ ] Deploy the web app to a hosting environment or platform of your choice.
+-   [x] WONT DO: Document the app's functionality, setup instructions, and usage guidelines.
+-   [x] Prepare the app for deployment by optimizing code, assets, and configurations.
+-   [x] Deploy the web app to a hosting environment or platform of your choice.
 
 ### Task: Small tasks and bug fixes
 
@@ -80,10 +80,10 @@ The "My Weight Loss" app empowers you to track your progress, stay motivated, an
 -   [x] Fix bug where that wheight graph does not come in the right order
 -   [x] Create a specific view for rewards with a progress bar and option to claim them
 -   [x] Calculate the expected time of arrival of target
--   [ ] Create a calendar view of good weeks and bad weeks
--   [ ] Calculate the expected time of goal/gift
--   [ ] Create view with suggested modification into targets per grade of difficulty
--   [ ] Fix annoying bug where loading page gets stuck after code update
+-   [x] Create a calendar view of good weeks and bad weeks
+-   [x] Calculate the expected time of goal/gift
+-   [x] Fix annoying bug where loading page gets stuck after code update
+-   [x] WONT DO: Create view with suggested modification into targets per grade of difficulty
 
 ## UI Components:
 
