@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-import { Typography, Box } from '@mui/material';
+import { Typography, Box, CardContent } from '@mui/material';
 import React from 'react';
 
 import Store from '../store/Store';
@@ -19,6 +19,7 @@ const getStats = (values) => {
 function WeightVelocity() {
 	const { weights, getLastWeight, getMaxWeight, getFirstWeightDate, targetWeight, getMilestones, getEstimatedDay } = Store.useWeightStore();
 	const { milestone1, milestone2 } = getMilestones();
+
 	let sortedWeight = weights.sort((a, b) => dayjs(a.date).diff(dayjs(b.date)));
 	const firstDate = sortedWeight.length > 0 ? sortedWeight[0].date : dayjs().format('YYYY/MM/DD');
 	let lastWeight = sortedWeight.length > 0 ? sortedWeight[0].weight : 0;
@@ -37,18 +38,60 @@ function WeightVelocity() {
 	const daysUntilTarget = Math.ceil((targetWeight - getLastWeight()) / total.avgPerDay);
 	const daysUntilMilestone1 = Math.ceil((milestone1 - getLastWeight()) / total.avgPerDay);
 	const daysUntilMilestone2 = Math.ceil((milestone2 - getLastWeight()) / total.avgPerDay);
+	const bmr = (88.362 + 13.397 * lastWeight + 4.799 * 182 - 5.677 * 34) * 1.2;
+	const { allCalories } = Store.useCaloriesStore();
+	const weekCalories = allCalories
+		.sort((a, b) => dayjs(a.date).diff(dayjs(b.date)))
+		.slice(-7)
+		.reduce((p, c) => (p += c.calories), 0);
+
+	const { allExercise } = Store.useExerciseStore();
+	const weekExercise = allExercise
+		.sort((a, b) => dayjs(a.date).diff(dayjs(b.date)))
+		.slice(-7)
+		.reduce((p, c) => (p += c.exercise), 0);
+
+	const deficit = weekCalories - weekExercise - bmr * 7;
+	const expectedWeightLoss = deficit / 7700;
+
 	const cardContent = () => {
 		const flexBaseline = { display: 'flex', alignItems: 'baseline' };
 		const stats = [
-			{ title: 'Loss so far:', value: total.totalDiff.toFixed(1), unit: 'kg' },
-			{ title: 'Still to go:', value: (getLastWeight() - targetWeight).toFixed(1), unit: 'kg' },
-			{ title: 'Loss average per day:', value: total.avgPerDay.toFixed(1), unit: 'kg/day' },
-			{ title: 'Loss average per week:', value: total.avgPerWeek.toFixed(1), unit: 'kg/week' },
-			{ title: 'Weight loss last week:', value: lastWeek.totalDiff.toFixed(1), unit: 'kg/week' },
-			{ title: 'Average loss last week:', value: lastWeek.avgPerDay.toFixed(1), unit: 'kg/day' },
-			{ title: '1st Milestone ' + milestone1.toFixed(0) + 'kg:', value: daysUntilMilestone1, unit: 'days' },
-			{ title: '2nd Milestone ' + milestone2.toFixed(0) + 'kg:', value: daysUntilMilestone2, unit: 'days' },
-			{ title: 'Time estimated to goal:', value: daysUntilTarget, unit: 'days' },
+			{
+				section: 'Progress',
+				values: [
+					{ title: 'Loss so far:', value: total.totalDiff.toFixed(1), unit: 'kg' },
+					{ title: 'Still to go:', value: (getLastWeight() - targetWeight).toFixed(1), unit: 'kg' },
+				],
+			},
+			{
+				section: 'Averages',
+				values: [
+					{ title: 'Loss average per day:', value: total.avgPerDay.toFixed(2), unit: 'kg/day' },
+					{ title: 'Loss average per week:', value: total.avgPerWeek.toFixed(2), unit: 'kg/week' },
+					{ title: 'Weight loss last week:', value: lastWeek.totalDiff.toFixed(2), unit: 'kg/week' },
+					{ title: 'Average loss last week:', value: lastWeek.avgPerDay.toFixed(2), unit: 'kg/day' },
+				],
+			},
+			{
+				section: 'Estimations',
+				values: [
+					{ title: '1st Milestone ' + milestone1.toFixed(0) + 'kg:', value: daysUntilMilestone1, unit: 'days' },
+					{ title: '2nd Milestone ' + milestone2.toFixed(0) + 'kg:', value: daysUntilMilestone2, unit: 'days' },
+					{ title: 'Time estimated to goal:', value: daysUntilTarget, unit: 'days' },
+				],
+			},
+			{
+				section: 'Calories Intake',
+				values: [
+					{ title: 'BMR:', value: bmr.toFixed(0), unit: 'cals' },
+					{ title: 'Week intake:', value: weekCalories.toFixed(0), unit: 'cals' },
+					{ title: 'Week exercise:', value: weekExercise.toFixed(0), unit: 'cals' },
+					{ title: 'Week deficit:', value: deficit.toFixed(0), unit: 'cals' },
+					{ title: 'Expected weight loss:', value: expectedWeightLoss.toFixed(2), unit: 'kg/week' },
+					{ title: 'Expected weight loss:', value: (expectedWeightLoss / 7).toFixed(2), unit: 'kg/day' },
+				],
+			},
 		];
 
 		return (
@@ -75,17 +118,26 @@ function WeightVelocity() {
 				</Box>
 				{stats.map((stat, i) => {
 					return (
-						<Box key={i} sx={{ display: 'grid', gridTemplateColumns: 'auto 20% 10%', alignItems: 'center' }}>
-							<Typography sx={{ justifySelf: 'start' }} variant="subtitle">
-								{stat.title}
+						<CardContent key={i}>
+							<Typography variant="h5" color="primary">
+								{stat.section}
 							</Typography>
-							<Typography sx={{ justifySelf: 'center' }} variant="h5">
-								{stat.value}
-							</Typography>
-							<Typography sx={{ justifySelf: 'start' }} variant="caption">
-								{stat.unit}
-							</Typography>
-						</Box>
+							{stat.values.map((value, i) => {
+								return (
+									<Box key={i} sx={{ display: 'grid', gridTemplateColumns: 'auto 20% 10%', alignItems: 'center' }}>
+										<Typography sx={{ justifySelf: 'start' }} variant="subtitle1">
+											{value.title}
+										</Typography>
+										<Typography sx={{ justifySelf: 'center' }} variant="h6">
+											{value.value}
+										</Typography>
+										<Typography sx={{ justifySelf: 'start' }} variant="caption">
+											{value.unit}
+										</Typography>
+									</Box>
+								);
+							})}
+						</CardContent>
 					);
 				})}
 			</>

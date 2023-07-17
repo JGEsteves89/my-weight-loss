@@ -13,12 +13,12 @@ import WeightVelocity from '../components/WeightVelocity';
 
 function HomeView({ username }) {
 	const cards = [
-		<WeightVelocity />,
 		<DayCalendarView />,
 		<WeightTrackingForm />,
 		<CalorieTracking />,
 		<ExerciseTracking />,
 		<GoalsTracking />,
+		<WeightVelocity />,
 		<GoalSettingForm />,
 	];
 

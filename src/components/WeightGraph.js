@@ -80,7 +80,7 @@ function WeightGraph() {
 						y={milestone3}
 						stroke={theme.palette.secondary.dark}
 					/>
-					<Line type="monotone" dataKey="weight" stroke={theme.palette.primary.main} />
+					<Line type="monotone" strokeWidth={2} dataKey="weight" stroke={theme.palette.primary.main} />
 				</LineChart>
 			</ResponsiveContainer>
 		</Box>
